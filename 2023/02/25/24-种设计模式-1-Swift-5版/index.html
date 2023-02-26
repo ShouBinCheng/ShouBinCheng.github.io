@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.5k 字
+          8k 字
         
       </span>
     
@@ -232,7 +232,7 @@
         
         
         
-          71 分钟
+          67 分钟
         
       </span>
     
@@ -280,7 +280,46 @@
 <p>以下是一个使用简单工厂模式的示例代码：</p>
 <ul>
 <li><p>Swift Code</p>
-  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// 定义一个接口，所有产品类都要实现这个接口</span><br><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Product</span> &#123;<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">use</span>()<br>&#125;<br><br><span class="hljs-comment">// 具体的产品类实现 Product 接口</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ProductA</span>: <span class="hljs-title class_">Product</span> &#123;<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">use</span>() &#123;<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;ProductA used&quot;</span>)<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ProductB</span>: <span class="hljs-title class_">Product</span> &#123;<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">use</span>() &#123;<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;ProductB used&quot;</span>)<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 简单工厂类</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">SimpleFactory</span> &#123;<br>    <span class="hljs-keyword">enum</span> <span class="hljs-title class_">ProductType</span> &#123;<br>        <span class="hljs-keyword">case</span> <span class="hljs-type">A</span>, <span class="hljs-type">B</span><br>    &#125;<br><br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">createProduct</span>(<span class="hljs-params">type</span>: <span class="hljs-type">ProductType</span>) -&gt; <span class="hljs-type">Product</span> &#123;<br>        <span class="hljs-keyword">switch</span> type &#123;<br>        <span class="hljs-keyword">case</span> .<span class="hljs-type">A</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-type">ProductA</span>()<br>        <span class="hljs-keyword">case</span> .<span class="hljs-type">B</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-type">ProductB</span>()<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 客户端代码</span><br><span class="hljs-keyword">let</span> productA <span class="hljs-operator">=</span> <span class="hljs-type">SimpleFactory</span>.createProduct(type: .<span class="hljs-type">A</span>)<br>productA.use() <span class="hljs-comment">// 输出: &quot;ProductA used&quot;</span><br><br><span class="hljs-keyword">let</span> productB <span class="hljs-operator">=</span> <span class="hljs-type">SimpleFactory</span>.createProduct(type: .<span class="hljs-type">B</span>)<br>productB.use() <span class="hljs-comment">// 输出: &quot;ProductB used&quot;</span><br></code></pre></td></tr></table></figure></li>
+  <div class="code-wrapper"><pre><code class="hljs swift"><span class="hljs-comment">// 定义一个接口，所有产品类都要实现这个接口</span>
+<span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Product</span> &#123;
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">use</span>()
+&#125;
+
+<span class="hljs-comment">// 具体的产品类实现 Product 接口</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">ProductA</span>: <span class="hljs-title class_">Product</span> &#123;
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">use</span>() &#123;
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;ProductA used&quot;</span>)
+    &#125;
+&#125;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">ProductB</span>: <span class="hljs-title class_">Product</span> &#123;
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">use</span>() &#123;
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;ProductB used&quot;</span>)
+    &#125;
+&#125;
+
+<span class="hljs-comment">// 简单工厂类</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">SimpleFactory</span> &#123;
+    <span class="hljs-keyword">enum</span> <span class="hljs-title class_">ProductType</span> &#123;
+        <span class="hljs-keyword">case</span> <span class="hljs-type">A</span>, <span class="hljs-type">B</span>
+    &#125;
+
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">createProduct</span>(<span class="hljs-params">type</span>: <span class="hljs-type">ProductType</span>) -&gt; <span class="hljs-type">Product</span> &#123;
+        <span class="hljs-keyword">switch</span> type &#123;
+        <span class="hljs-keyword">case</span> .<span class="hljs-type">A</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-type">ProductA</span>()
+        <span class="hljs-keyword">case</span> .<span class="hljs-type">B</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-type">ProductB</span>()
+        &#125;
+    &#125;
+&#125;
+
+<span class="hljs-comment">// 客户端代码</span>
+<span class="hljs-keyword">let</span> productA <span class="hljs-operator">=</span> <span class="hljs-type">SimpleFactory</span>.createProduct(type: .<span class="hljs-type">A</span>)
+productA.use() <span class="hljs-comment">// 输出: &quot;ProductA used&quot;</span>
+
+<span class="hljs-keyword">let</span> productB <span class="hljs-operator">=</span> <span class="hljs-type">SimpleFactory</span>.createProduct(type: .<span class="hljs-type">B</span>)
+productB.use() <span class="hljs-comment">// 输出: &quot;ProductB used&quot;</span></code></pre></div></li>
 </ul>
 <p>在上面的示例代码中，**<code>Product</code>** 定义了一个使用产品的接口。**<code>ProductA</code>** 和 <strong><code>ProductB</code></strong> 是具体的产品类，它们都实现了 <strong><code>Product</code></strong> 接口。**<code>SimpleFactory</code>** 是简单工厂类，它根据客户端请求的参数来创建不同的产品类的对象，然后返回给客户端。最后，客户端通过调用返回的对象的 <strong><code>use</code></strong> 方法来使用产品。</p>
 <h3 id="2-抽象工厂模式（Abstract-Factory-Pattern）"><a href="#2-抽象工厂模式（Abstract-Factory-Pattern）" class="headerlink" title="2. 抽象工厂模式（Abstract Factory Pattern）"></a>2. 抽象工厂模式（Abstract Factory Pattern）</h3><p>抽象工厂模式（Abstract Factory Pattern）是一种创建型设计模式，它提供了一种创建一系列相关或相互依赖对象的接口，而无需指定它们的具体类。这种模式属于对象创建型模式，它解决了在不指定对象具体类的情况下创建一系列相关或相互依赖的对象问题。</p>
@@ -294,14 +333,130 @@
 <p>下面是一个简单的 Swift 5 示例，展示了如何使用抽象工厂模式创建和使用不同系列的产品对象。假设我们需要创建一组不同的计算机，每台计算机包含 CPU 和主板，分为 Intel 和 AMD 两个系列。我们可以定义一个 <strong><code>AbstractFactory</code></strong> 协议，其中包含了创建 CPU 和主板的两个方法，然后定义两个具体的工厂类 <strong><code>IntelFactory</code></strong> 和 <strong><code>AMDFactory</code></strong> 分别实现该协议，以便创建相应系列的产品。最后，我们可以在客户端中使用工厂对象来创建所需的产品。</p>
 <ul>
 <li><p>Swift Code</p>
-  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// 抽象产品协议</span><br><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">CPU</span> &#123;<br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123; <span class="hljs-keyword">get</span> &#125;<br>&#125;<br><br><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Motherboard</span> &#123;<br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123; <span class="hljs-keyword">get</span> &#125;<br>&#125;<br><br><span class="hljs-comment">// 抽象工厂协议</span><br><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">AbstractFactory</span> &#123;<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createCPU</span>() -&gt; <span class="hljs-type">CPU</span><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createMotherboard</span>() -&gt; <span class="hljs-type">Motherboard</span><br>&#125;<br><br><span class="hljs-comment">// 具体产品</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">IntelCPU</span>: <span class="hljs-title class_">CPU</span> &#123;<br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Intel CPU&quot;</span><br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">IntelMotherboard</span>: <span class="hljs-title class_">Motherboard</span> &#123;<br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Intel Motherboard&quot;</span><br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">AMDCPU</span>: <span class="hljs-title class_">CPU</span> &#123;<br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;AMD CPU&quot;</span><br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">AMDMotherboard</span>: <span class="hljs-title class_">Motherboard</span> &#123;<br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;AMD Motherboard&quot;</span><br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 具体工厂</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">IntelFactory</span>: <span class="hljs-title class_">AbstractFactory</span> &#123;<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createCPU</span>() -&gt; <span class="hljs-type">CPU</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-type">IntelCPU</span>()<br>    &#125;<br><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createMotherboard</span>() -&gt; <span class="hljs-type">Motherboard</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-type">IntelMotherboard</span>()<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">AMDFactory</span>: <span class="hljs-title class_">AbstractFactory</span> &#123;<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createCPU</span>() -&gt; <span class="hljs-type">CPU</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-type">AMDCPU</span>()<br>    &#125;<br><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createMotherboard</span>() -&gt; <span class="hljs-type">Motherboard</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-type">AMDMotherboard</span>()<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 客户端代码</span><br><span class="hljs-keyword">let</span> intelFactory <span class="hljs-operator">=</span> <span class="hljs-type">IntelFactory</span>()<br><span class="hljs-keyword">let</span> amdFactory <span class="hljs-operator">=</span> <span class="hljs-type">AMDFactory</span>()<br><br><span class="hljs-keyword">let</span> intelCPU <span class="hljs-operator">=</span> intelFactory.createCPU()<br><span class="hljs-keyword">let</span> intelMotherboard <span class="hljs-operator">=</span> intelFactory.createMotherboard()<br><br><span class="hljs-keyword">let</span> amdCPU <span class="hljs-operator">=</span> amdFactory.createCPU()<br><span class="hljs-keyword">let</span> amdMotherboard <span class="hljs-operator">=</span> amdFactory.createMotherboard()<br><br><span class="hljs-built_in">print</span>(intelCPU.name) <span class="hljs-comment">// 输出: Intel CPU</span><br><span class="hljs-built_in">print</span>(intelMotherboard.name) <span class="hljs-comment">// 输出: Intel Motherboard</span><br><span class="hljs-built_in">print</span>(amdCPU.name) <span class="hljs-comment">// 输出: AMD CPU</span><br><span class="hljs-built_in">print</span>(amdMotherboard.name) <span class="hljs-comment">// 输出: AMD Motherboard</span><br></code></pre></td></tr></table></figure></li>
+  <div class="code-wrapper"><pre><code class="hljs swift"><span class="hljs-comment">// 抽象产品协议</span>
+<span class="hljs-keyword">protocol</span> <span class="hljs-title class_">CPU</span> &#123;
+    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123; <span class="hljs-keyword">get</span> &#125;
+&#125;
+
+<span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Motherboard</span> &#123;
+    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123; <span class="hljs-keyword">get</span> &#125;
+&#125;
+
+<span class="hljs-comment">// 抽象工厂协议</span>
+<span class="hljs-keyword">protocol</span> <span class="hljs-title class_">AbstractFactory</span> &#123;
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createCPU</span>() -&gt; <span class="hljs-type">CPU</span>
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createMotherboard</span>() -&gt; <span class="hljs-type">Motherboard</span>
+&#125;
+
+<span class="hljs-comment">// 具体产品</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">IntelCPU</span>: <span class="hljs-title class_">CPU</span> &#123;
+    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Intel CPU&quot;</span>
+    &#125;
+&#125;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">IntelMotherboard</span>: <span class="hljs-title class_">Motherboard</span> &#123;
+    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Intel Motherboard&quot;</span>
+    &#125;
+&#125;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">AMDCPU</span>: <span class="hljs-title class_">CPU</span> &#123;
+    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;AMD CPU&quot;</span>
+    &#125;
+&#125;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">AMDMotherboard</span>: <span class="hljs-title class_">Motherboard</span> &#123;
+    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;AMD Motherboard&quot;</span>
+    &#125;
+&#125;
+
+<span class="hljs-comment">// 具体工厂</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">IntelFactory</span>: <span class="hljs-title class_">AbstractFactory</span> &#123;
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createCPU</span>() -&gt; <span class="hljs-type">CPU</span> &#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-type">IntelCPU</span>()
+    &#125;
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createMotherboard</span>() -&gt; <span class="hljs-type">Motherboard</span> &#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-type">IntelMotherboard</span>()
+    &#125;
+&#125;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">AMDFactory</span>: <span class="hljs-title class_">AbstractFactory</span> &#123;
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createCPU</span>() -&gt; <span class="hljs-type">CPU</span> &#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-type">AMDCPU</span>()
+    &#125;
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createMotherboard</span>() -&gt; <span class="hljs-type">Motherboard</span> &#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-type">AMDMotherboard</span>()
+    &#125;
+&#125;
+
+<span class="hljs-comment">// 客户端代码</span>
+<span class="hljs-keyword">let</span> intelFactory <span class="hljs-operator">=</span> <span class="hljs-type">IntelFactory</span>()
+<span class="hljs-keyword">let</span> amdFactory <span class="hljs-operator">=</span> <span class="hljs-type">AMDFactory</span>()
+
+<span class="hljs-keyword">let</span> intelCPU <span class="hljs-operator">=</span> intelFactory.createCPU()
+<span class="hljs-keyword">let</span> intelMotherboard <span class="hljs-operator">=</span> intelFactory.createMotherboard()
+
+<span class="hljs-keyword">let</span> amdCPU <span class="hljs-operator">=</span> amdFactory.createCPU()
+<span class="hljs-keyword">let</span> amdMotherboard <span class="hljs-operator">=</span> amdFactory.createMotherboard()
+
+<span class="hljs-built_in">print</span>(intelCPU.name) <span class="hljs-comment">// 输出: Intel CPU</span>
+<span class="hljs-built_in">print</span>(intelMotherboard.name) <span class="hljs-comment">// 输出: Intel Motherboard</span>
+<span class="hljs-built_in">print</span>(amdCPU.name) <span class="hljs-comment">// 输出: AMD CPU</span>
+<span class="hljs-built_in">print</span>(amdMotherboard.name) <span class="hljs-comment">// 输出: AMD Motherboard</span></code></pre></div></li>
 </ul>
 <h3 id="3-工厂方法模式（Factory-Method-Pattern）"><a href="#3-工厂方法模式（Factory-Method-Pattern）" class="headerlink" title="3. 工厂方法模式（Factory Method Pattern）"></a>3. 工厂方法模式（Factory Method Pattern）</h3><p>工厂方法模式（Factory Method Pattern）是一种常用的创建型设计模式，它定义了一个用于创建对象的接口，但是让子类决定将哪一个类实例化，工厂方法模式让一个类的实例化延迟到其子类。</p>
 <p>工厂方法模式可以很好地解决创建对象的问题，可以避免直接使用 <strong><code>new</code></strong> 这种方式创建对象，而是通过工厂方法来创建对象，这样可以避免代码中的耦合问题，增强代码的可扩展性和可维护性。</p>
 <p>下面是一个使用 Swift 5 实现工厂方法模式的示例代码：</p>
 <ul>
 <li><p>Swift Code</p>
-  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// 抽象产品</span><br><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Product</span> &#123;<br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123; <span class="hljs-keyword">get</span> &#125;<br>&#125;<br><br><span class="hljs-comment">// 具体产品 A</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ProductA</span>: <span class="hljs-title class_">Product</span> &#123;<br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123; <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Product A&quot;</span> &#125;<br>&#125;<br><br><span class="hljs-comment">// 具体产品 B</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ProductB</span>: <span class="hljs-title class_">Product</span> &#123;<br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123; <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Product B&quot;</span> &#125;<br>&#125;<br><br><span class="hljs-comment">// 抽象工厂</span><br><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Factory</span> &#123;<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createProduct</span>() -&gt; <span class="hljs-type">Product</span><br>&#125;<br><br><span class="hljs-comment">// 具体工厂 A</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">FactoryA</span>: <span class="hljs-title class_">Factory</span> &#123;<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createProduct</span>() -&gt; <span class="hljs-type">Product</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-type">ProductA</span>()<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 具体工厂 B</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">FactoryB</span>: <span class="hljs-title class_">Factory</span> &#123;<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createProduct</span>() -&gt; <span class="hljs-type">Product</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-type">ProductB</span>()<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 客户端代码</span><br><span class="hljs-keyword">let</span> factoryA <span class="hljs-operator">=</span> <span class="hljs-type">FactoryA</span>()<br><span class="hljs-keyword">let</span> factoryB <span class="hljs-operator">=</span> <span class="hljs-type">FactoryB</span>()<br><br><span class="hljs-keyword">let</span> productA <span class="hljs-operator">=</span> factoryA.createProduct()<br><span class="hljs-keyword">let</span> productB <span class="hljs-operator">=</span> factoryB.createProduct()<br><br><span class="hljs-built_in">print</span>(productA.name) <span class="hljs-comment">// &quot;Product A&quot;</span><br><span class="hljs-built_in">print</span>(productB.name) <span class="hljs-comment">// &quot;Product B&quot;</span><br></code></pre></td></tr></table></figure></li>
+  <div class="code-wrapper"><pre><code class="hljs swift"><span class="hljs-comment">// 抽象产品</span>
+<span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Product</span> &#123;
+    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123; <span class="hljs-keyword">get</span> &#125;
+&#125;
+
+<span class="hljs-comment">// 具体产品 A</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">ProductA</span>: <span class="hljs-title class_">Product</span> &#123;
+    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123; <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Product A&quot;</span> &#125;
+&#125;
+
+<span class="hljs-comment">// 具体产品 B</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">ProductB</span>: <span class="hljs-title class_">Product</span> &#123;
+    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123; <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Product B&quot;</span> &#125;
+&#125;
+
+<span class="hljs-comment">// 抽象工厂</span>
+<span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Factory</span> &#123;
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createProduct</span>() -&gt; <span class="hljs-type">Product</span>
+&#125;
+
+<span class="hljs-comment">// 具体工厂 A</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">FactoryA</span>: <span class="hljs-title class_">Factory</span> &#123;
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createProduct</span>() -&gt; <span class="hljs-type">Product</span> &#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-type">ProductA</span>()
+    &#125;
+&#125;
+
+<span class="hljs-comment">// 具体工厂 B</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">FactoryB</span>: <span class="hljs-title class_">Factory</span> &#123;
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createProduct</span>() -&gt; <span class="hljs-type">Product</span> &#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-type">ProductB</span>()
+    &#125;
+&#125;
+
+<span class="hljs-comment">// 客户端代码</span>
+<span class="hljs-keyword">let</span> factoryA <span class="hljs-operator">=</span> <span class="hljs-type">FactoryA</span>()
+<span class="hljs-keyword">let</span> factoryB <span class="hljs-operator">=</span> <span class="hljs-type">FactoryB</span>()
+
+<span class="hljs-keyword">let</span> productA <span class="hljs-operator">=</span> factoryA.createProduct()
+<span class="hljs-keyword">let</span> productB <span class="hljs-operator">=</span> factoryB.createProduct()
+
+<span class="hljs-built_in">print</span>(productA.name) <span class="hljs-comment">// &quot;Product A&quot;</span>
+<span class="hljs-built_in">print</span>(productB.name) <span class="hljs-comment">// &quot;Product B&quot;</span></code></pre></div></li>
 </ul>
 <p>在这个示例代码中，我们定义了一个 <strong><code>Product</code></strong> 协议，其中包含一个 <strong><code>name</code></strong> 属性，用于表示产品的名称。然后，我们定义了两个具体产品 <strong><code>ProductA</code></strong> 和 **<code>ProductB</code>**，它们分别实现了 <strong><code>Product</code></strong> 协议。</p>
 <p>接着，我们定义了一个 <strong><code>Factory</code></strong> 协议，其中包含一个 <strong><code>createProduct</code></strong> 方法，用于创建产品。然后，我们定义了两个具体工厂 <strong><code>FactoryA</code></strong> 和 **<code>FactoryB</code>**，它们分别实现了 <strong><code>Factory</code></strong> 协议，用于创建不同的产品。</p>
@@ -315,21 +470,124 @@
 <p>以下是使用 Swift 5 实现建造者模式的示例代码：</p>
 <ul>
 <li><p>Swift Code</p>
-  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// Product</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Pizza</span> &#123;<br>    <span class="hljs-keyword">var</span> dough: <span class="hljs-type">String</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span><br>    <span class="hljs-keyword">var</span> sauce: <span class="hljs-type">String</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span><br>    <span class="hljs-keyword">var</span> toppings: [<span class="hljs-type">String</span>] <span class="hljs-operator">=</span> []<br><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">showPizza</span>() &#123;<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Pizza with <span class="hljs-subst">\(dough)</span> dough, <span class="hljs-subst">\(sauce)</span> sauce and toppings: <span class="hljs-subst">\(toppings.joined(separator: <span class="hljs-string">&quot;, &quot;</span>))</span>&quot;</span>)<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// Builder</span><br><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">PizzaBuilder</span> &#123;<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">addDough</span>()<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">addSauce</span>()<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">addToppings</span>()<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">getPizza</span>() -&gt; <span class="hljs-type">Pizza</span><br>&#125;<br><br><span class="hljs-comment">// Concrete Builder</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MargheritaPizzaBuilder</span>: <span class="hljs-title class_">PizzaBuilder</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> pizza <span class="hljs-operator">=</span> <span class="hljs-type">Pizza</span>()<br><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">addDough</span>() &#123;<br>        pizza.dough <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Thin crust&quot;</span><br>    &#125;<br><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">addSauce</span>() &#123;<br>        pizza.sauce <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Tomato sauce&quot;</span><br>    &#125;<br><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">addToppings</span>() &#123;<br>        pizza.toppings <span class="hljs-operator">=</span> [<span class="hljs-string">&quot;Mozzarella cheese&quot;</span>, <span class="hljs-string">&quot;Basil leaves&quot;</span>]<br>    &#125;<br><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">getPizza</span>() -&gt; <span class="hljs-type">Pizza</span> &#123;<br>        <span class="hljs-keyword">return</span> pizza<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// Director</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PizzaDirector</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> builder: <span class="hljs-type">PizzaBuilder</span><br><br>    <span class="hljs-keyword">init</span>(<span class="hljs-params">builder</span>: <span class="hljs-type">PizzaBuilder</span>) &#123;<br>        <span class="hljs-keyword">self</span>.builder <span class="hljs-operator">=</span> builder<br>    &#125;<br><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">makePizza</span>() -&gt; <span class="hljs-type">Pizza</span> &#123;<br>        builder.addDough()<br>        builder.addSauce()<br>        builder.addToppings()<br>        <span class="hljs-keyword">return</span> builder.getPizza()<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// Client code</span><br><span class="hljs-keyword">let</span> margheritaBuilder <span class="hljs-operator">=</span> <span class="hljs-type">MargheritaPizzaBuilder</span>()<br><span class="hljs-keyword">let</span> pizzaDirector <span class="hljs-operator">=</span> <span class="hljs-type">PizzaDirector</span>(builder: margheritaBuilder)<br><span class="hljs-keyword">let</span> margheritaPizza <span class="hljs-operator">=</span> pizzaDirector.makePizza()<br>margheritaPizza.showPizza()<br></code></pre></td></tr></table></figure></li>
+  <div class="code-wrapper"><pre><code class="hljs swift"><span class="hljs-comment">// Product</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Pizza</span> &#123;
+    <span class="hljs-keyword">var</span> dough: <span class="hljs-type">String</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span>
+    <span class="hljs-keyword">var</span> sauce: <span class="hljs-type">String</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span>
+    <span class="hljs-keyword">var</span> toppings: [<span class="hljs-type">String</span>] <span class="hljs-operator">=</span> []
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">showPizza</span>() &#123;
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Pizza with <span class="hljs-subst">\(dough)</span> dough, <span class="hljs-subst">\(sauce)</span> sauce and toppings: <span class="hljs-subst">\(toppings.joined(separator: <span class="hljs-string">&quot;, &quot;</span>))</span>&quot;</span>)
+    &#125;
+&#125;
+
+<span class="hljs-comment">// Builder</span>
+<span class="hljs-keyword">protocol</span> <span class="hljs-title class_">PizzaBuilder</span> &#123;
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">addDough</span>()
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">addSauce</span>()
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">addToppings</span>()
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">getPizza</span>() -&gt; <span class="hljs-type">Pizza</span>
+&#125;
+
+<span class="hljs-comment">// Concrete Builder</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MargheritaPizzaBuilder</span>: <span class="hljs-title class_">PizzaBuilder</span> &#123;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> pizza <span class="hljs-operator">=</span> <span class="hljs-type">Pizza</span>()
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">addDough</span>() &#123;
+        pizza.dough <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Thin crust&quot;</span>
+    &#125;
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">addSauce</span>() &#123;
+        pizza.sauce <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Tomato sauce&quot;</span>
+    &#125;
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">addToppings</span>() &#123;
+        pizza.toppings <span class="hljs-operator">=</span> [<span class="hljs-string">&quot;Mozzarella cheese&quot;</span>, <span class="hljs-string">&quot;Basil leaves&quot;</span>]
+    &#125;
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">getPizza</span>() -&gt; <span class="hljs-type">Pizza</span> &#123;
+        <span class="hljs-keyword">return</span> pizza
+    &#125;
+&#125;
+
+<span class="hljs-comment">// Director</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">PizzaDirector</span> &#123;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> builder: <span class="hljs-type">PizzaBuilder</span>
+
+    <span class="hljs-keyword">init</span>(<span class="hljs-params">builder</span>: <span class="hljs-type">PizzaBuilder</span>) &#123;
+        <span class="hljs-keyword">self</span>.builder <span class="hljs-operator">=</span> builder
+    &#125;
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">makePizza</span>() -&gt; <span class="hljs-type">Pizza</span> &#123;
+        builder.addDough()
+        builder.addSauce()
+        builder.addToppings()
+        <span class="hljs-keyword">return</span> builder.getPizza()
+    &#125;
+&#125;
+
+<span class="hljs-comment">// Client code</span>
+<span class="hljs-keyword">let</span> margheritaBuilder <span class="hljs-operator">=</span> <span class="hljs-type">MargheritaPizzaBuilder</span>()
+<span class="hljs-keyword">let</span> pizzaDirector <span class="hljs-operator">=</span> <span class="hljs-type">PizzaDirector</span>(builder: margheritaBuilder)
+<span class="hljs-keyword">let</span> margheritaPizza <span class="hljs-operator">=</span> pizzaDirector.makePizza()
+margheritaPizza.showPizza()</code></pre></div></li>
 </ul>
 <p>在这个示例中，**<code>Pizza</code>** 是我们要创建的复杂对象，而 <strong><code>PizzaBuilder</code></strong> 协议定义了建造者应该具备的方法，包括添加面团、酱料和配料等。 <strong><code>MargheritaPizzaBuilder</code></strong> 是建造者的具体实现，它实现了 <strong><code>PizzaBuilder</code></strong> 协议中的方法，用于构建玛格丽特比萨。**<code>PizzaDirector</code>** 类负责管理建造者的调用顺序，它根据特定的建造者构建产品。最后，客户端代码使用建造者和指挥者来构建产品并将其展示出来。</p>
 <h3 id="5-原型模式（Prototype-Pattern）"><a href="#5-原型模式（Prototype-Pattern）" class="headerlink" title="5. 原型模式（Prototype Pattern）"></a>5. 原型模式（Prototype Pattern）</h3><p>原型模式（Prototype Pattern）是一种创建型设计模式，它允许通过复制现有对象来创建新对象，而不必通过标准构造函数创建。该模式需要实现一个克隆方法，该方法克隆原型对象并返回副本。这使得客户端能够生成新对象，同时保留原始对象的状态。</p>
 <p>原型模式通常用于创建复杂的对象，这些对象的创建过程比简单的构造函数调用要复杂得多。通常，创建这些对象需要许多步骤和复杂的算法，这些算法需要大量的计算和资源。在这种情况下，使用原型模式可以更有效地生成新对象，因为不需要在每次创建对象时重新计算它们。</p>
 <p>下面是一个使用原型模式的简单示例，其中我们将克隆现有汽车对象以创建新对象。首先，我们需要创建一个“Car”协议，并实现克隆方法：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Car</span>: <span class="hljs-title class_">AnyObject</span>, <span class="hljs-title class_">NSCopying</span> &#123;<br>    <span class="hljs-keyword">var</span> model: <span class="hljs-type">String</span> &#123; <span class="hljs-keyword">get</span> <span class="hljs-keyword">set</span> &#125;<br>    <span class="hljs-keyword">var</span> color: <span class="hljs-type">String</span> &#123; <span class="hljs-keyword">get</span> <span class="hljs-keyword">set</span> &#125;<br>    <span class="hljs-keyword">var</span> price: <span class="hljs-type">Double</span> &#123; <span class="hljs-keyword">get</span> <span class="hljs-keyword">set</span> &#125;<br>&#125;<br><br><span class="hljs-keyword">extension</span> <span class="hljs-title class_">Car</span> &#123;<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">copy</span>(<span class="hljs-params">with</span> <span class="hljs-params">zone</span>: <span class="hljs-type">NSZone</span>? <span class="hljs-operator">=</span> <span class="hljs-literal">nil</span>) -&gt; <span class="hljs-keyword">Any</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-type">CarPrototype</span>(model: model, color: color, price: price)<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">CarPrototype</span>: <span class="hljs-title class_">Car</span> &#123;<br>    <span class="hljs-keyword">var</span> model: <span class="hljs-type">String</span><br>    <span class="hljs-keyword">var</span> color: <span class="hljs-type">String</span><br>    <span class="hljs-keyword">var</span> price: <span class="hljs-type">Double</span><br><br>    <span class="hljs-keyword">init</span>(<span class="hljs-params">model</span>: <span class="hljs-type">String</span>, <span class="hljs-params">color</span>: <span class="hljs-type">String</span>, <span class="hljs-params">price</span>: <span class="hljs-type">Double</span>) &#123;<br>        <span class="hljs-keyword">self</span>.model <span class="hljs-operator">=</span> model<br>        <span class="hljs-keyword">self</span>.color <span class="hljs-operator">=</span> color<br>        <span class="hljs-keyword">self</span>.price <span class="hljs-operator">=</span> price<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs swift"><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Car</span>: <span class="hljs-title class_">AnyObject</span>, <span class="hljs-title class_">NSCopying</span> &#123;
+    <span class="hljs-keyword">var</span> model: <span class="hljs-type">String</span> &#123; <span class="hljs-keyword">get</span> <span class="hljs-keyword">set</span> &#125;
+    <span class="hljs-keyword">var</span> color: <span class="hljs-type">String</span> &#123; <span class="hljs-keyword">get</span> <span class="hljs-keyword">set</span> &#125;
+    <span class="hljs-keyword">var</span> price: <span class="hljs-type">Double</span> &#123; <span class="hljs-keyword">get</span> <span class="hljs-keyword">set</span> &#125;
+&#125;
+
+<span class="hljs-keyword">extension</span> <span class="hljs-title class_">Car</span> &#123;
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">copy</span>(<span class="hljs-params">with</span> <span class="hljs-params">zone</span>: <span class="hljs-type">NSZone</span>? <span class="hljs-operator">=</span> <span class="hljs-literal">nil</span>) -&gt; <span class="hljs-keyword">Any</span> &#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-type">CarPrototype</span>(model: model, color: color, price: price)
+    &#125;
+&#125;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">CarPrototype</span>: <span class="hljs-title class_">Car</span> &#123;
+    <span class="hljs-keyword">var</span> model: <span class="hljs-type">String</span>
+    <span class="hljs-keyword">var</span> color: <span class="hljs-type">String</span>
+    <span class="hljs-keyword">var</span> price: <span class="hljs-type">Double</span>
+
+    <span class="hljs-keyword">init</span>(<span class="hljs-params">model</span>: <span class="hljs-type">String</span>, <span class="hljs-params">color</span>: <span class="hljs-type">String</span>, <span class="hljs-params">price</span>: <span class="hljs-type">Double</span>) &#123;
+        <span class="hljs-keyword">self</span>.model <span class="hljs-operator">=</span> model
+        <span class="hljs-keyword">self</span>.color <span class="hljs-operator">=</span> color
+        <span class="hljs-keyword">self</span>.price <span class="hljs-operator">=</span> price
+    &#125;
+&#125;</code></pre></div>
 
 <p>在上面的代码中，我们定义了“Car”协议，并使用“CarPrototype”类实现了该协议。我们还使用“NSCopying”协议为该类提供了克隆方法。</p>
 <p>接下来，我们将创建一个“CarFactory”类，该类将提供一些现有汽车对象，供客户端使用克隆方法生成新对象：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">class</span> <span class="hljs-title class_">CarFactory</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> prototypes <span class="hljs-operator">=</span> [<span class="hljs-type">String</span>: <span class="hljs-type">Car</span>]()<br><br>    <span class="hljs-keyword">init</span>() &#123;<br>        prototypes[<span class="hljs-string">&quot;SUV&quot;</span>] <span class="hljs-operator">=</span> <span class="hljs-type">CarPrototype</span>(model: <span class="hljs-string">&quot;SUV&quot;</span>, color: <span class="hljs-string">&quot;Red&quot;</span>, price: <span class="hljs-number">50000</span>)<br>        prototypes[<span class="hljs-string">&quot;Coupe&quot;</span>] <span class="hljs-operator">=</span> <span class="hljs-type">CarPrototype</span>(model: <span class="hljs-string">&quot;Coupe&quot;</span>, color: <span class="hljs-string">&quot;Blue&quot;</span>, price: <span class="hljs-number">80000</span>)<br>    &#125;<br><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createCar</span>(<span class="hljs-params">ofType</span> <span class="hljs-params">type</span>: <span class="hljs-type">String</span>) -&gt; <span class="hljs-type">Car</span>? &#123;<br>        <span class="hljs-keyword">return</span> prototypes[type]<span class="hljs-operator">?</span>.copy() <span class="hljs-keyword">as?</span> <span class="hljs-type">Car</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs swift"><span class="hljs-keyword">class</span> <span class="hljs-title class_">CarFactory</span> &#123;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> prototypes <span class="hljs-operator">=</span> [<span class="hljs-type">String</span>: <span class="hljs-type">Car</span>]()
+
+    <span class="hljs-keyword">init</span>() &#123;
+        prototypes[<span class="hljs-string">&quot;SUV&quot;</span>] <span class="hljs-operator">=</span> <span class="hljs-type">CarPrototype</span>(model: <span class="hljs-string">&quot;SUV&quot;</span>, color: <span class="hljs-string">&quot;Red&quot;</span>, price: <span class="hljs-number">50000</span>)
+        prototypes[<span class="hljs-string">&quot;Coupe&quot;</span>] <span class="hljs-operator">=</span> <span class="hljs-type">CarPrototype</span>(model: <span class="hljs-string">&quot;Coupe&quot;</span>, color: <span class="hljs-string">&quot;Blue&quot;</span>, price: <span class="hljs-number">80000</span>)
+    &#125;
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createCar</span>(<span class="hljs-params">ofType</span> <span class="hljs-params">type</span>: <span class="hljs-type">String</span>) -&gt; <span class="hljs-type">Car</span>? &#123;
+        <span class="hljs-keyword">return</span> prototypes[type]<span class="hljs-operator">?</span>.copy() <span class="hljs-keyword">as?</span> <span class="hljs-type">Car</span>
+    &#125;
+&#125;</code></pre></div>
 
 <p>在上面的代码中，我们使用“prototypes”字典来存储现有的汽车对象。客户端可以使用“createCar(ofType:)”方法来获取现有汽车对象的副本，并生成新对象。</p>
 <p>下面是一个示例，演示如何使用“CarFactory”类生成新的汽车对象：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">let</span> factory <span class="hljs-operator">=</span> <span class="hljs-type">CarFactory</span>()<br><span class="hljs-keyword">let</span> suv1 <span class="hljs-operator">=</span> factory.createCar(ofType: <span class="hljs-string">&quot;SUV&quot;</span>)<br><span class="hljs-keyword">let</span> suv2 <span class="hljs-operator">=</span> factory.createCar(ofType: <span class="hljs-string">&quot;SUV&quot;</span>)<br><br>suv1<span class="hljs-operator">?</span>.model <span class="hljs-comment">// SUV</span><br>suv1<span class="hljs-operator">?</span>.color <span class="hljs-comment">// Red</span><br>suv1<span class="hljs-operator">?</span>.price <span class="hljs-comment">// 50000</span><br><br>suv2<span class="hljs-operator">?</span>.model <span class="hljs-comment">// SUV</span><br>suv2<span class="hljs-operator">?</span>.color <span class="hljs-comment">// Red</span><br>suv2<span class="hljs-operator">?</span>.price <span class="hljs-comment">// 50000</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs swift"><span class="hljs-keyword">let</span> factory <span class="hljs-operator">=</span> <span class="hljs-type">CarFactory</span>()
+<span class="hljs-keyword">let</span> suv1 <span class="hljs-operator">=</span> factory.createCar(ofType: <span class="hljs-string">&quot;SUV&quot;</span>)
+<span class="hljs-keyword">let</span> suv2 <span class="hljs-operator">=</span> factory.createCar(ofType: <span class="hljs-string">&quot;SUV&quot;</span>)
+
+suv1<span class="hljs-operator">?</span>.model <span class="hljs-comment">// SUV</span>
+suv1<span class="hljs-operator">?</span>.color <span class="hljs-comment">// Red</span>
+suv1<span class="hljs-operator">?</span>.price <span class="hljs-comment">// 50000</span>
+
+suv2<span class="hljs-operator">?</span>.model <span class="hljs-comment">// SUV</span>
+suv2<span class="hljs-operator">?</span>.color <span class="hljs-comment">// Red</span>
+suv2<span class="hljs-operator">?</span>.price <span class="hljs-comment">// 50000</span></code></pre></div>
 
 <h3 id="6-单例模式（Singleton-Pattern）"><a href="#6-单例模式（Singleton-Pattern）" class="headerlink" title="6. 单例模式（Singleton Pattern）"></a>6. 单例模式（Singleton Pattern）</h3><p>单例模式（Singleton Pattern）是一种创建型模式，它保证一个类只有一个实例，并提供一个全局访问点。</p>
 <p>单例模式的常见应用场景包括：</p>
@@ -339,7 +597,17 @@
 </ul>
 <p>在 Swift 中，可以使用静态变量或全局变量来实现单例模式，也可以使用结构体来实现。</p>
 <p>以下是一个使用静态变量实现单例模式的例子：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Singleton</span> &#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">let</span> shared <span class="hljs-operator">=</span> <span class="hljs-type">Singleton</span>()<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">init</span>() &#123;<br>        <span class="hljs-comment">// 私有化初始化方法，避免在外部创建实例</span><br>    &#125;<br><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">someMethod</span>() &#123;<br>        <span class="hljs-comment">// 单例类的其他方法</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs swift"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Singleton</span> &#123;
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">let</span> shared <span class="hljs-operator">=</span> <span class="hljs-type">Singleton</span>()
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">init</span>() &#123;
+        <span class="hljs-comment">// 私有化初始化方法，避免在外部创建实例</span>
+    &#125;
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">someMethod</span>() &#123;
+        <span class="hljs-comment">// 单例类的其他方法</span>
+    &#125;
+&#125;</code></pre></div>
 
 <p>在上面的例子中，我们使用一个名为 <strong><code>shared</code></strong> 的静态变量来保存唯一的实例。**<code>shared</code>** 变量在第一次访问时会触发 <strong><code>Singleton</code></strong> 类的初始化方法，而由于该方法是私有的，因此无法从外部创建实例。其他的方法则可以通过 <strong><code>Singleton.shared</code></strong> 来访问。由于 Swift 的静态变量是线程安全的，因此该实现方式可以保证单例模式的正确性。</p>
 

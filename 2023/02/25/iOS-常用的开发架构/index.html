@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.4k 字
+          4k 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          37 分钟
+          34 分钟
         
       </span>
     
@@ -283,7 +283,54 @@
 <li>View：用户界面，展示数据以及与用户交互的界面。</li>
 <li>Controller：控制器，协调Model和View之间的通信。</li>
 </ul>
-<h3 id="MVC-Swift-5-示例代码"><a href="#MVC-Swift-5-示例代码" class="headerlink" title="MVC Swift 5 示例代码"></a>MVC Swift 5 示例代码</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// Model</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span><br>    <span class="hljs-keyword">var</span> age: <span class="hljs-type">Int</span><br><br>    <span class="hljs-keyword">init</span>(<span class="hljs-params">name</span>: <span class="hljs-type">String</span>, <span class="hljs-params">age</span>: <span class="hljs-type">Int</span>) &#123;<br>        <span class="hljs-keyword">self</span>.name <span class="hljs-operator">=</span> name<br>        <span class="hljs-keyword">self</span>.age <span class="hljs-operator">=</span> age<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// View</span><br><span class="hljs-keyword">import</span> UIKit<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonView</span>: <span class="hljs-title class_">UIView</span> &#123;<br>    <span class="hljs-keyword">let</span> nameLabel <span class="hljs-operator">=</span> <span class="hljs-type">UILabel</span>()<br>    <span class="hljs-keyword">let</span> ageLabel <span class="hljs-operator">=</span> <span class="hljs-type">UILabel</span>()<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-keyword">init</span>(<span class="hljs-params">frame</span>: <span class="hljs-type">CGRect</span>) &#123;<br>        <span class="hljs-keyword">super</span>.<span class="hljs-keyword">init</span>(frame: frame)<br>        nameLabel.frame <span class="hljs-operator">=</span> <span class="hljs-type">CGRect</span>(x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>, width: <span class="hljs-number">100</span>, height: <span class="hljs-number">50</span>)<br>        ageLabel.frame <span class="hljs-operator">=</span> <span class="hljs-type">CGRect</span>(x: <span class="hljs-number">0</span>, y: <span class="hljs-number">60</span>, width: <span class="hljs-number">100</span>, height: <span class="hljs-number">50</span>)<br>        <span class="hljs-keyword">self</span>.addSubview(nameLabel)<br>        <span class="hljs-keyword">self</span>.addSubview(ageLabel)<br>    &#125;<br><br>    <span class="hljs-keyword">required</span> <span class="hljs-keyword">init?</span>(<span class="hljs-params">coder</span>: <span class="hljs-type">NSCoder</span>) &#123;<br>        <span class="hljs-built_in">fatalError</span>(<span class="hljs-string">&quot;init(coder:) has not been implemented&quot;</span>)<br>    &#125;<br><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">configure</span>(<span class="hljs-params">with</span> <span class="hljs-params">person</span>: <span class="hljs-type">Person</span>) &#123;<br>        nameLabel.text <span class="hljs-operator">=</span> person.name<br>        ageLabel.text <span class="hljs-operator">=</span> <span class="hljs-string">&quot;<span class="hljs-subst">\\</span>(person.age)&quot;</span><br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// Controller</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonController</span> &#123;<br>    <span class="hljs-keyword">let</span> person: <span class="hljs-type">Person</span><br>    <span class="hljs-keyword">let</span> personView: <span class="hljs-type">PersonView</span><br><br>    <span class="hljs-keyword">init</span>(<span class="hljs-params">person</span>: <span class="hljs-type">Person</span>, <span class="hljs-params">personView</span>: <span class="hljs-type">PersonView</span>) &#123;<br>        <span class="hljs-keyword">self</span>.person <span class="hljs-operator">=</span> person<br>        <span class="hljs-keyword">self</span>.personView <span class="hljs-operator">=</span> personView<br>        <span class="hljs-keyword">self</span>.personView.configure(with: person)<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<h3 id="MVC-Swift-5-示例代码"><a href="#MVC-Swift-5-示例代码" class="headerlink" title="MVC Swift 5 示例代码"></a>MVC Swift 5 示例代码</h3><div class="code-wrapper"><pre><code class="hljs swift"><span class="hljs-comment">// Model</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;
+    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span>
+    <span class="hljs-keyword">var</span> age: <span class="hljs-type">Int</span>
+
+    <span class="hljs-keyword">init</span>(<span class="hljs-params">name</span>: <span class="hljs-type">String</span>, <span class="hljs-params">age</span>: <span class="hljs-type">Int</span>) &#123;
+        <span class="hljs-keyword">self</span>.name <span class="hljs-operator">=</span> name
+        <span class="hljs-keyword">self</span>.age <span class="hljs-operator">=</span> age
+    &#125;
+&#125;
+
+<span class="hljs-comment">// View</span>
+<span class="hljs-keyword">import</span> UIKit
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonView</span>: <span class="hljs-title class_">UIView</span> &#123;
+    <span class="hljs-keyword">let</span> nameLabel <span class="hljs-operator">=</span> <span class="hljs-type">UILabel</span>()
+    <span class="hljs-keyword">let</span> ageLabel <span class="hljs-operator">=</span> <span class="hljs-type">UILabel</span>()
+
+    <span class="hljs-keyword">override</span> <span class="hljs-keyword">init</span>(<span class="hljs-params">frame</span>: <span class="hljs-type">CGRect</span>) &#123;
+        <span class="hljs-keyword">super</span>.<span class="hljs-keyword">init</span>(frame: frame)
+        nameLabel.frame <span class="hljs-operator">=</span> <span class="hljs-type">CGRect</span>(x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>, width: <span class="hljs-number">100</span>, height: <span class="hljs-number">50</span>)
+        ageLabel.frame <span class="hljs-operator">=</span> <span class="hljs-type">CGRect</span>(x: <span class="hljs-number">0</span>, y: <span class="hljs-number">60</span>, width: <span class="hljs-number">100</span>, height: <span class="hljs-number">50</span>)
+        <span class="hljs-keyword">self</span>.addSubview(nameLabel)
+        <span class="hljs-keyword">self</span>.addSubview(ageLabel)
+    &#125;
+
+    <span class="hljs-keyword">required</span> <span class="hljs-keyword">init?</span>(<span class="hljs-params">coder</span>: <span class="hljs-type">NSCoder</span>) &#123;
+        <span class="hljs-built_in">fatalError</span>(<span class="hljs-string">&quot;init(coder:) has not been implemented&quot;</span>)
+    &#125;
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">configure</span>(<span class="hljs-params">with</span> <span class="hljs-params">person</span>: <span class="hljs-type">Person</span>) &#123;
+        nameLabel.text <span class="hljs-operator">=</span> person.name
+        ageLabel.text <span class="hljs-operator">=</span> <span class="hljs-string">&quot;<span class="hljs-subst">\\</span>(person.age)&quot;</span>
+    &#125;
+&#125;
+
+<span class="hljs-comment">// Controller</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonController</span> &#123;
+    <span class="hljs-keyword">let</span> person: <span class="hljs-type">Person</span>
+    <span class="hljs-keyword">let</span> personView: <span class="hljs-type">PersonView</span>
+
+    <span class="hljs-keyword">init</span>(<span class="hljs-params">person</span>: <span class="hljs-type">Person</span>, <span class="hljs-params">personView</span>: <span class="hljs-type">PersonView</span>) &#123;
+        <span class="hljs-keyword">self</span>.person <span class="hljs-operator">=</span> person
+        <span class="hljs-keyword">self</span>.personView <span class="hljs-operator">=</span> personView
+        <span class="hljs-keyword">self</span>.personView.configure(with: person)
+    &#125;
+&#125;
+</code></pre></div>
 
 <h2 id="2-MVVM架构"><a href="#2-MVVM架构" class="headerlink" title="2. MVVM架构"></a>2. MVVM架构</h2><p>MVVM是Model-View-ViewModel的缩写，是在MVC架构的基础上发展而来的一种设计模式。</p>
 <ul>
@@ -291,7 +338,72 @@
 <li>View：用户界面，展示数据以及与用户交互的界面。</li>
 <li>ViewModel：作为View和Model之间的中间层，负责处理View的展示逻辑，将Model的数据转化为View需要的数据。</li>
 </ul>
-<h3 id="MVVM-Swift-5-示例代码"><a href="#MVVM-Swift-5-示例代码" class="headerlink" title="MVVM Swift 5 示例代码"></a>MVVM Swift 5 示例代码</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// Model</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span><br>    <span class="hljs-keyword">var</span> age: <span class="hljs-type">Int</span><br><br>    <span class="hljs-keyword">init</span>(<span class="hljs-params">name</span>: <span class="hljs-type">String</span>, <span class="hljs-params">age</span>: <span class="hljs-type">Int</span>) &#123;<br>        <span class="hljs-keyword">self</span>.name <span class="hljs-operator">=</span> name<br>        <span class="hljs-keyword">self</span>.age <span class="hljs-operator">=</span> age<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// ViewModel</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonViewModel</span> &#123;<br>    <span class="hljs-keyword">var</span> person: <span class="hljs-type">Person</span><br><br>    <span class="hljs-keyword">init</span>(<span class="hljs-params">person</span>: <span class="hljs-type">Person</span>) &#123;<br>        <span class="hljs-keyword">self</span>.person <span class="hljs-operator">=</span> person<br>    &#125;<br><br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123;<br>        <span class="hljs-keyword">return</span> person.name<br>    &#125;<br><br>    <span class="hljs-keyword">var</span> age: <span class="hljs-type">String</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;<span class="hljs-subst">\\</span>(person.age)&quot;</span><br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// View</span><br><span class="hljs-keyword">import</span> UIKit<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonView</span>: <span class="hljs-title class_">UIView</span> &#123;<br>    <span class="hljs-keyword">let</span> nameLabel <span class="hljs-operator">=</span> <span class="hljs-type">UILabel</span>()<br>    <span class="hljs-keyword">let</span> ageLabel <span class="hljs-operator">=</span> <span class="hljs-type">UILabel</span>()<br>    <span class="hljs-keyword">var</span> viewModel: <span class="hljs-type">PersonViewModel</span>? &#123;<br>        <span class="hljs-keyword">didSet</span> &#123;<br>            nameLabel.text <span class="hljs-operator">=</span> viewModel<span class="hljs-operator">?</span>.name<br>            ageLabel.text <span class="hljs-operator">=</span> viewModel<span class="hljs-operator">?</span>.age<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-keyword">init</span>(<span class="hljs-params">frame</span>: <span class="hljs-type">CGRect</span>) &#123;<br>        <span class="hljs-keyword">super</span>.<span class="hljs-keyword">init</span>(frame: frame)<br>        nameLabel.frame <span class="hljs-operator">=</span> <span class="hljs-type">CGRect</span>(x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>, width: <span class="hljs-number">100</span>, height: <span class="hljs-number">50</span>)<br>        ageLabel.frame <span class="hljs-operator">=</span> <span class="hljs-type">CGRect</span>(x: <span class="hljs-number">0</span>, y: <span class="hljs-number">60</span>, width: <span class="hljs-number">100</span>, height: <span class="hljs-number">50</span>)<br>        <span class="hljs-keyword">self</span>.addSubview(nameLabel)<br>        <span class="hljs-keyword">self</span>.addSubview(ageLabel)<br>    &#125;<br><br>    <span class="hljs-keyword">required</span> <span class="hljs-keyword">init?</span>(<span class="hljs-params">coder</span>: <span class="hljs-type">NSCoder</span>) &#123;<br>        <span class="hljs-built_in">fatalError</span>(<span class="hljs-string">&quot;init(coder:) has not been implemented&quot;</span>)<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// Controller</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonController</span> &#123;<br>    <span class="hljs-keyword">let</span> personView: <span class="hljs-type">PersonView</span><br>    <span class="hljs-keyword">let</span> personViewModel: <span class="hljs-type">PersonViewModel</span><br><br>    <span class="hljs-keyword">init</span>(<span class="hljs-params">person</span>: <span class="hljs-type">Person</span>) &#123;<br>        <span class="hljs-keyword">self</span>.personViewModel <span class="hljs-operator">=</span> <span class="hljs-type">PersonViewModel</span>(person: person)<br>        <span class="hljs-keyword">self</span>.personView <span class="hljs-operator">=</span> <span class="hljs-type">PersonView</span>()<br>        <span class="hljs-keyword">self</span>.personView.viewModel <span class="hljs-operator">=</span> personViewModel<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<h3 id="MVVM-Swift-5-示例代码"><a href="#MVVM-Swift-5-示例代码" class="headerlink" title="MVVM Swift 5 示例代码"></a>MVVM Swift 5 示例代码</h3><div class="code-wrapper"><pre><code class="hljs swift"><span class="hljs-comment">// Model</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;
+    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span>
+    <span class="hljs-keyword">var</span> age: <span class="hljs-type">Int</span>
+
+    <span class="hljs-keyword">init</span>(<span class="hljs-params">name</span>: <span class="hljs-type">String</span>, <span class="hljs-params">age</span>: <span class="hljs-type">Int</span>) &#123;
+        <span class="hljs-keyword">self</span>.name <span class="hljs-operator">=</span> name
+        <span class="hljs-keyword">self</span>.age <span class="hljs-operator">=</span> age
+    &#125;
+&#125;
+
+<span class="hljs-comment">// ViewModel</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonViewModel</span> &#123;
+    <span class="hljs-keyword">var</span> person: <span class="hljs-type">Person</span>
+
+    <span class="hljs-keyword">init</span>(<span class="hljs-params">person</span>: <span class="hljs-type">Person</span>) &#123;
+        <span class="hljs-keyword">self</span>.person <span class="hljs-operator">=</span> person
+    &#125;
+
+    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> &#123;
+        <span class="hljs-keyword">return</span> person.name
+    &#125;
+
+    <span class="hljs-keyword">var</span> age: <span class="hljs-type">String</span> &#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;<span class="hljs-subst">\\</span>(person.age)&quot;</span>
+    &#125;
+&#125;
+
+<span class="hljs-comment">// View</span>
+<span class="hljs-keyword">import</span> UIKit
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonView</span>: <span class="hljs-title class_">UIView</span> &#123;
+    <span class="hljs-keyword">let</span> nameLabel <span class="hljs-operator">=</span> <span class="hljs-type">UILabel</span>()
+    <span class="hljs-keyword">let</span> ageLabel <span class="hljs-operator">=</span> <span class="hljs-type">UILabel</span>()
+    <span class="hljs-keyword">var</span> viewModel: <span class="hljs-type">PersonViewModel</span>? &#123;
+        <span class="hljs-keyword">didSet</span> &#123;
+            nameLabel.text <span class="hljs-operator">=</span> viewModel<span class="hljs-operator">?</span>.name
+            ageLabel.text <span class="hljs-operator">=</span> viewModel<span class="hljs-operator">?</span>.age
+        &#125;
+    &#125;
+
+    <span class="hljs-keyword">override</span> <span class="hljs-keyword">init</span>(<span class="hljs-params">frame</span>: <span class="hljs-type">CGRect</span>) &#123;
+        <span class="hljs-keyword">super</span>.<span class="hljs-keyword">init</span>(frame: frame)
+        nameLabel.frame <span class="hljs-operator">=</span> <span class="hljs-type">CGRect</span>(x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>, width: <span class="hljs-number">100</span>, height: <span class="hljs-number">50</span>)
+        ageLabel.frame <span class="hljs-operator">=</span> <span class="hljs-type">CGRect</span>(x: <span class="hljs-number">0</span>, y: <span class="hljs-number">60</span>, width: <span class="hljs-number">100</span>, height: <span class="hljs-number">50</span>)
+        <span class="hljs-keyword">self</span>.addSubview(nameLabel)
+        <span class="hljs-keyword">self</span>.addSubview(ageLabel)
+    &#125;
+
+    <span class="hljs-keyword">required</span> <span class="hljs-keyword">init?</span>(<span class="hljs-params">coder</span>: <span class="hljs-type">NSCoder</span>) &#123;
+        <span class="hljs-built_in">fatalError</span>(<span class="hljs-string">&quot;init(coder:) has not been implemented&quot;</span>)
+    &#125;
+&#125;
+
+<span class="hljs-comment">// Controller</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonController</span> &#123;
+    <span class="hljs-keyword">let</span> personView: <span class="hljs-type">PersonView</span>
+    <span class="hljs-keyword">let</span> personViewModel: <span class="hljs-type">PersonViewModel</span>
+
+    <span class="hljs-keyword">init</span>(<span class="hljs-params">person</span>: <span class="hljs-type">Person</span>) &#123;
+        <span class="hljs-keyword">self</span>.personViewModel <span class="hljs-operator">=</span> <span class="hljs-type">PersonViewModel</span>(person: person)
+        <span class="hljs-keyword">self</span>.personView <span class="hljs-operator">=</span> <span class="hljs-type">PersonView</span>()
+        <span class="hljs-keyword">self</span>.personView.viewModel <span class="hljs-operator">=</span> personViewModel
+    &#125;
+&#125;
+</code></pre></div>
 
 <h2 id="3-VIPER架构"><a href="#3-VIPER架构" class="headerlink" title="3. VIPER架构"></a>3. VIPER架构</h2><p>VIPER是View-Interactor-Presenter-Entity-Router的缩写，是一种通过将应用程序的逻辑分解成多个独立的模块来构建清晰、可扩展和易于维护的架构。</p>
 <ul>
@@ -301,7 +413,87 @@
 <li>Entity：数据模型，封装了应用程序的数据以及操作数据的方法。</li>
 <li>Router：负责处理模块之间的跳转逻辑。</li>
 </ul>
-<h3 id="VIPER-Swift-5-示例代码"><a href="#VIPER-Swift-5-示例代码" class="headerlink" title="VIPER Swift 5 示例代码"></a>VIPER Swift 5 示例代码</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// Entity</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span><br>    <span class="hljs-keyword">var</span> age: <span class="hljs-type">Int</span><br><br>    <span class="hljs-keyword">init</span>(<span class="hljs-params">name</span>: <span class="hljs-type">String</span>, <span class="hljs-params">age</span>: <span class="hljs-type">Int</span>) &#123;<br>        <span class="hljs-keyword">self</span>.name <span class="hljs-operator">=</span> name<br>        <span class="hljs-keyword">self</span>.age <span class="hljs-operator">=</span> age<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// Interactor</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonInteractor</span> &#123;<br>    <span class="hljs-keyword">var</span> person: <span class="hljs-type">Person</span>?<br><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">fetchPerson</span>() -&gt; <span class="hljs-type">Person</span> &#123;<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> person <span class="hljs-operator">=</span> person &#123;<br>            <span class="hljs-keyword">return</span> person<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">let</span> person <span class="hljs-operator">=</span> <span class="hljs-type">Person</span>(name: <span class="hljs-string">&quot;Tom&quot;</span>, age: <span class="hljs-number">18</span>)<br>            <span class="hljs-keyword">self</span>.person <span class="hljs-operator">=</span> person<br>            <span class="hljs-keyword">return</span> person<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// Presenter</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonPresenter</span> &#123;<br>    <span class="hljs-keyword">var</span> person: <span class="hljs-type">Person</span>?<br>    <span class="hljs-keyword">weak</span> <span class="hljs-keyword">var</span> view: <span class="hljs-type">PersonView</span>?<br>    <span class="hljs-keyword">let</span> interactor <span class="hljs-operator">=</span> <span class="hljs-type">PersonInteractor</span>()<br><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">fetchPerson</span>() &#123;<br>        <span class="hljs-keyword">let</span> person <span class="hljs-operator">=</span> interactor.fetchPerson()<br>        <span class="hljs-keyword">self</span>.person <span class="hljs-operator">=</span> person<br>        view<span class="hljs-operator">?</span>.configure(with: person)<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// View</span><br><span class="hljs-keyword">import</span> UIKit<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonView</span>: <span class="hljs-title class_">UIView</span> &#123;<br>    <span class="hljs-keyword">let</span> nameLabel <span class="hljs-operator">=</span> <span class="hljs-type">UILabel</span>()<br>    <span class="hljs-keyword">let</span> ageLabel <span class="hljs-operator">=</span> <span class="hljs-type">UILabel</span>()<br>    <span class="hljs-keyword">var</span> presenter: <span class="hljs-type">PersonPresenter</span>?<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-keyword">init</span>(<span class="hljs-params">frame</span>: <span class="hljs-type">CGRect</span>) &#123;<br>        <span class="hljs-keyword">super</span>.<span class="hljs-keyword">init</span>(frame: frame)<br>        nameLabel.frame <span class="hljs-operator">=</span> <span class="hljs-type">CGRect</span>(x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>, width: <span class="hljs-number">100</span>, height: <span class="hljs-number">50</span>)<br>        ageLabel.frame <span class="hljs-operator">=</span> <span class="hljs-type">CGRect</span>(x: <span class="hljs-number">0</span>, y: <span class="hljs-number">60</span>, width: <span class="hljs-number">100</span>, height: <span class="hljs-number">50</span>)<br>        <span class="hljs-keyword">self</span>.addSubview(nameLabel)<br>        <span class="hljs-keyword">self</span>.addSubview(ageLabel)<br>    &#125;<br><br>    <span class="hljs-keyword">required</span> <span class="hljs-keyword">init?</span>(<span class="hljs-params">coder</span>: <span class="hljs-type">NSCoder</span>) &#123;<br>        <span class="hljs-built_in">fatalError</span>(<span class="hljs-string">&quot;init(coder:) has not been implemented&quot;</span>)<br>    &#125;<br><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">configure</span>(<span class="hljs-params">with</span> <span class="hljs-params">person</span>: <span class="hljs-type">Person</span>) &#123;<br>        nameLabel.text <span class="hljs-operator">=</span> person.name<br>        ageLabel.text <span class="hljs-operator">=</span> <span class="hljs-string">&quot;<span class="hljs-subst">\\</span>(person.age)&quot;</span><br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// Router</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonRouter</span> &#123;<br><br>&#125;<br><br><span class="hljs-comment">// Controller</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonController</span> &#123;<br>    <span class="hljs-keyword">let</span> personView <span class="hljs-operator">=</span> <span class="hljs-type">PersonView</span>()<br>    <span class="hljs-keyword">let</span> personPresenter <span class="hljs-operator">=</span> <span class="hljs-type">PersonPresenter</span>()<br>    <span class="hljs-keyword">let</span> personRouter <span class="hljs-operator">=</span> <span class="hljs-type">PersonRouter</span>()<br><br>    <span class="hljs-keyword">init</span>() &#123;<br>        personPresenter.view <span class="hljs-operator">=</span> personView<br>        personView.presenter <span class="hljs-operator">=</span> personPresenter<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="VIPER-Swift-5-示例代码"><a href="#VIPER-Swift-5-示例代码" class="headerlink" title="VIPER Swift 5 示例代码"></a>VIPER Swift 5 示例代码</h3><div class="code-wrapper"><pre><code class="hljs swift"><span class="hljs-comment">// Entity</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;
+    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span>
+    <span class="hljs-keyword">var</span> age: <span class="hljs-type">Int</span>
+
+    <span class="hljs-keyword">init</span>(<span class="hljs-params">name</span>: <span class="hljs-type">String</span>, <span class="hljs-params">age</span>: <span class="hljs-type">Int</span>) &#123;
+        <span class="hljs-keyword">self</span>.name <span class="hljs-operator">=</span> name
+        <span class="hljs-keyword">self</span>.age <span class="hljs-operator">=</span> age
+    &#125;
+&#125;
+
+<span class="hljs-comment">// Interactor</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonInteractor</span> &#123;
+    <span class="hljs-keyword">var</span> person: <span class="hljs-type">Person</span>?
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">fetchPerson</span>() -&gt; <span class="hljs-type">Person</span> &#123;
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> person <span class="hljs-operator">=</span> person &#123;
+            <span class="hljs-keyword">return</span> person
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-keyword">let</span> person <span class="hljs-operator">=</span> <span class="hljs-type">Person</span>(name: <span class="hljs-string">&quot;Tom&quot;</span>, age: <span class="hljs-number">18</span>)
+            <span class="hljs-keyword">self</span>.person <span class="hljs-operator">=</span> person
+            <span class="hljs-keyword">return</span> person
+        &#125;
+    &#125;
+&#125;
+
+<span class="hljs-comment">// Presenter</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonPresenter</span> &#123;
+    <span class="hljs-keyword">var</span> person: <span class="hljs-type">Person</span>?
+    <span class="hljs-keyword">weak</span> <span class="hljs-keyword">var</span> view: <span class="hljs-type">PersonView</span>?
+    <span class="hljs-keyword">let</span> interactor <span class="hljs-operator">=</span> <span class="hljs-type">PersonInteractor</span>()
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">fetchPerson</span>() &#123;
+        <span class="hljs-keyword">let</span> person <span class="hljs-operator">=</span> interactor.fetchPerson()
+        <span class="hljs-keyword">self</span>.person <span class="hljs-operator">=</span> person
+        view<span class="hljs-operator">?</span>.configure(with: person)
+    &#125;
+&#125;
+
+<span class="hljs-comment">// View</span>
+<span class="hljs-keyword">import</span> UIKit
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonView</span>: <span class="hljs-title class_">UIView</span> &#123;
+    <span class="hljs-keyword">let</span> nameLabel <span class="hljs-operator">=</span> <span class="hljs-type">UILabel</span>()
+    <span class="hljs-keyword">let</span> ageLabel <span class="hljs-operator">=</span> <span class="hljs-type">UILabel</span>()
+    <span class="hljs-keyword">var</span> presenter: <span class="hljs-type">PersonPresenter</span>?
+
+    <span class="hljs-keyword">override</span> <span class="hljs-keyword">init</span>(<span class="hljs-params">frame</span>: <span class="hljs-type">CGRect</span>) &#123;
+        <span class="hljs-keyword">super</span>.<span class="hljs-keyword">init</span>(frame: frame)
+        nameLabel.frame <span class="hljs-operator">=</span> <span class="hljs-type">CGRect</span>(x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>, width: <span class="hljs-number">100</span>, height: <span class="hljs-number">50</span>)
+        ageLabel.frame <span class="hljs-operator">=</span> <span class="hljs-type">CGRect</span>(x: <span class="hljs-number">0</span>, y: <span class="hljs-number">60</span>, width: <span class="hljs-number">100</span>, height: <span class="hljs-number">50</span>)
+        <span class="hljs-keyword">self</span>.addSubview(nameLabel)
+        <span class="hljs-keyword">self</span>.addSubview(ageLabel)
+    &#125;
+
+    <span class="hljs-keyword">required</span> <span class="hljs-keyword">init?</span>(<span class="hljs-params">coder</span>: <span class="hljs-type">NSCoder</span>) &#123;
+        <span class="hljs-built_in">fatalError</span>(<span class="hljs-string">&quot;init(coder:) has not been implemented&quot;</span>)
+    &#125;
+
+    <span class="hljs-keyword">func</span> <span class="hljs-title function_">configure</span>(<span class="hljs-params">with</span> <span class="hljs-params">person</span>: <span class="hljs-type">Person</span>) &#123;
+        nameLabel.text <span class="hljs-operator">=</span> person.name
+        ageLabel.text <span class="hljs-operator">=</span> <span class="hljs-string">&quot;<span class="hljs-subst">\\</span>(person.age)&quot;</span>
+    &#125;
+&#125;
+
+<span class="hljs-comment">// Router</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonRouter</span> &#123;
+
+&#125;
+
+<span class="hljs-comment">// Controller</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">PersonController</span> &#123;
+    <span class="hljs-keyword">let</span> personView <span class="hljs-operator">=</span> <span class="hljs-type">PersonView</span>()
+    <span class="hljs-keyword">let</span> personPresenter <span class="hljs-operator">=</span> <span class="hljs-type">PersonPresenter</span>()
+    <span class="hljs-keyword">let</span> personRouter <span class="hljs-operator">=</span> <span class="hljs-type">PersonRouter</span>()
+
+    <span class="hljs-keyword">init</span>() &#123;
+        personPresenter.view <span class="hljs-operator">=</span> personView
+        personView.presenter <span class="hljs-operator">=</span> personPresenter
+    &#125;
+&#125;</code></pre></div>
                 
               </div>
             
