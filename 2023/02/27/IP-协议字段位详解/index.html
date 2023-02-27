@@ -16,25 +16,24 @@
   <meta name="author" content="程守斌">
   <meta name="keywords" content="">
   
-    <meta name="description" content="自从认识 notion 以来，一直都只使用 notion 写东西就再也没玩博客也了。notion 虽然也能分享页面链接，但用作于博客还是不太方便。今天有时间空下来，专门研究了一下 github.io 如何搭建个人博客网站，发现 Hexo &amp; Fluid 原来是这么的方便、这么的好用。写 blog 只需简单的执行几句命令行： # 创建一篇博客文章 hexo new &quot;title&amp;q">
+    <meta name="description" content="IP 协议字段位详解IP（Internet Protocol）协议是互联网的核心协议之一，它负责将网络层的数据包从源地址传输到目的地址。在IP数据包中，有许多字段用于描述数据包的内容和传输信息。下面将详细介绍IP协议中每个字段位的含义和作用。 IP协议位图以下是IP协议的位图表示，其中包括了每个字段位的位置和长度： 0                   1                   2">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello Hexo">
-<meta property="og:url" content="https://icoobin.github.io/2023/02/25/hello-world/index.html">
+<meta property="og:title" content="IP 协议字段位详解">
+<meta property="og:url" content="https://icoobin.github.io/2023/02/27/IP-%E5%8D%8F%E8%AE%AE%E5%AD%97%E6%AE%B5%E4%BD%8D%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="iCoobin">
-<meta property="og:description" content="自从认识 notion 以来，一直都只使用 notion 写东西就再也没玩博客也了。notion 虽然也能分享页面链接，但用作于博客还是不太方便。今天有时间空下来，专门研究了一下 github.io 如何搭建个人博客网站，发现 Hexo &amp; Fluid 原来是这么的方便、这么的好用。写 blog 只需简单的执行几句命令行： # 创建一篇博客文章 hexo new &quot;title&amp;q">
+<meta property="og:description" content="IP 协议字段位详解IP（Internet Protocol）协议是互联网的核心协议之一，它负责将网络层的数据包从源地址传输到目的地址。在IP数据包中，有许多字段用于描述数据包的内容和传输信息。下面将详细介绍IP协议中每个字段位的含义和作用。 IP协议位图以下是IP协议的位图表示，其中包括了每个字段位的位置和长度： 0                   1                   2">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://icoobin.github.io/index_imgs/hello.webp">
-<meta property="article:published_time" content="2023-02-24T16:11:27.901Z">
-<meta property="article:modified_time" content="2023-02-27T04:46:34.679Z">
+<meta property="article:published_time" content="2023-02-27T04:40:53.000Z">
+<meta property="article:modified_time" content="2023-02-27T04:59:14.614Z">
 <meta property="article:author" content="程守斌">
+<meta property="article:tag" content="网络协议">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://icoobin.github.io/index_imgs/hello.webp">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Hello Hexo - iCoobin</title>
+  <title>IP 协议字段位详解 - iCoobin</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hello Hexo"></span>
+            <span id="subtitle" data-typed-text="IP 协议字段位详解"></span>
           
         </div>
 
@@ -239,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-25 00:11" pubdate>
-          2023年2月25日 凌晨
+        <time datetime="2023-02-27 12:40" pubdate>
+          2023年2月27日 下午
         </time>
       </span>
     
@@ -251,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          399 字
+          2k 字
         
       </span>
     
@@ -262,7 +261,7 @@
         
         
         
-          4 分钟
+          18 分钟
         
       </span>
     
@@ -308,23 +307,47 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Hello Hexo</h1>
+            <h1 style="display: none">IP 协议字段位详解</h1>
             
             
               <div class="markdown-body">
                 
-                <p>自从认识 notion 以来，一直都只使用 notion 写东西就再也没玩博客也了。notion 虽然也能分享页面链接，但用作于博客还是不太方便。今天有时间空下来，专门研究了一下 github.io 如何搭建个人博客网站，发现 Hexo &amp; Fluid 原来是这么的方便、这么的好用。<br>写 blog 只需简单的执行几句命令行：</p>
-<div class="code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># 创建一篇博客文章</span>
-hexo new <span class="hljs-string">&quot;title&quot;</span>
-
-<span class="hljs-comment"># 清理缓存 -&gt; 本地测试（就可以直接预览）</span>
-hexo clean &amp; hexo s
-
-<span class="hljs-comment"># 清理缓存 -&gt; 生存静态页 -&gt; 部署到github (等 10 分钟就可发布成功，因为github缓存)</span>
-hexo clean &amp; hexo g &amp; hexo d
+                <h1 id="IP-协议字段位详解"><a href="#IP-协议字段位详解" class="headerlink" title="IP 协议字段位详解"></a>IP 协议字段位详解</h1><p>IP（Internet Protocol）协议是互联网的核心协议之一，它负责将网络层的数据包从源地址传输到目的地址。在IP数据包中，有许多字段用于描述数据包的内容和传输信息。下面将详细介绍IP协议中每个字段位的含义和作用。</p>
+<h2 id="IP协议位图"><a href="#IP协议位图" class="headerlink" title="IP协议位图"></a>IP协议位图</h2><p>以下是IP协议的位图表示，其中包括了每个字段位的位置和长度：</p>
+<div class="code-wrapper"><pre><code class="hljs bash">0                   1                   2                   3
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|Version|  IHL  |Type of Service|          Total Length         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|         Identification        |Flags|      Fragment Offset    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  Time to Live |    Protocol   |         Header Checksum       |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                       Source Address                          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                    Destination Address                        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                    Options                    |    Padding    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </code></pre></div>
-<p>只需要上面的几句命令，就可以发布一篇 blog，简直爱❤️了。</p>
-<p>hexo 同样也支持 markdown 格式，这样就可以把 notion 里的文章，搬到 github.io 上来当 blog 页使用。</p>
+
+<h2 id="IP协议字段位详解"><a href="#IP协议字段位详解" class="headerlink" title="IP协议字段位详解"></a>IP协议字段位详解</h2><h3 id="Version（版本）"><a href="#Version（版本）" class="headerlink" title="Version（版本）"></a>Version（版本）</h3><p>该字段占4位，用于指定IP协议版本号。当前IP协议版本为IPv4，其版本号为4。</p>
+<h3 id="IHL（报头长度）"><a href="#IHL（报头长度）" class="headerlink" title="IHL（报头长度）"></a>IHL（报头长度）</h3><p>该字段占4位，用于指定IP数据包报头的长度，以32位字长为单位。因此，IHL字段的值是4的倍数。最小值为5，最大值为15。</p>
+<h3 id="Type-of-Service（服务类型）"><a href="#Type-of-Service（服务类型）" class="headerlink" title="Type of Service（服务类型）"></a>Type of Service（服务类型）</h3><p>该字段占8位，用于指定IP数据包的服务类型。其中，前3位为优先级，后5位为服务类型。该字段已被DSCP所取代。</p>
+<h3 id="Total-Length（总长度）"><a href="#Total-Length（总长度）" class="headerlink" title="Total Length（总长度）"></a>Total Length（总长度）</h3><p>该字段占16位，用于指定IP数据包的总长度，以字节为单位。该长度包括IP数据包的报头和数据负载。</p>
+<h3 id="Identification（标识）"><a href="#Identification（标识）" class="headerlink" title="Identification（标识）"></a>Identification（标识）</h3><p>该字段占16位，用于标识IP数据包的唯一标识符。每个IP数据包都应该有一个唯一的标识符。</p>
+<h3 id="Flags（标志）"><a href="#Flags（标志）" class="headerlink" title="Flags（标志）"></a>Flags（标志）</h3><p>该字段占3位，用于指定IP数据包的分片信息。其中，第1位为Reserved，第2位为Don’t Fragment（DF），第3位为More Fragments（MF）。</p>
+<h3 id="Fragment-Offset（分片偏移）"><a href="#Fragment-Offset（分片偏移）" class="headerlink" title="Fragment Offset（分片偏移）"></a>Fragment Offset（分片偏移）</h3><p>该字段占13位，用于指定IP数据包在分片后的偏移量，以8字节为单位。该字段只在MF标志位被设置时有效。</p>
+<h3 id="Time-to-Live（生存时间）"><a href="#Time-to-Live（生存时间）" class="headerlink" title="Time to Live（生存时间）"></a>Time to Live（生存时间）</h3><p>该字段占8位，用于指定IP数据包在网络中的生存时间。每次经过一个路由器，该字段的值就会减1，当该字段的值为0时，数据包将被丢弃。</p>
+<h3 id="Protocol（协议）"><a href="#Protocol（协议）" class="headerlink" title="Protocol（协议）"></a>Protocol（协议）</h3><p>该字段占8位，用于指定IP数据包中的上层协议类型。常见的协议类型有TCP、UDP和ICMP等。</p>
+<h3 id="Header-Checksum（报头校验和）"><a href="#Header-Checksum（报头校验和）" class="headerlink" title="Header Checksum（报头校验和）"></a>Header Checksum（报头校验和）</h3><p>该字段占16位，用于校验IP数据包报头的正确性。校验和的计算方法是将报头中的每个16位字加起来，再将结果按位取反。</p>
+<h3 id="Source-Address（源地址）"><a href="#Source-Address（源地址）" class="headerlink" title="Source Address（源地址）"></a>Source Address（源地址）</h3><p>该字段占32位，用于指定IP数据包的源地址。</p>
+<h3 id="Destination-Address（目的地址）"><a href="#Destination-Address（目的地址）" class="headerlink" title="Destination Address（目的地址）"></a>Destination Address（目的地址）</h3><p>该字段占32位，用于指定IP数据包的目的地址。</p>
+<h3 id="Options（选项）"><a href="#Options（选项）" class="headerlink" title="Options（选项）"></a>Options（选项）</h3><p>该字段占变长，用于在IP数据包中添加一些可选的信息，如记录路径、时间戳等。如果该字段不存在，则用0填充。</p>
+<h3 id="Padding（填充）"><a href="#Padding（填充）" class="headerlink" title="Padding（填充）"></a>Padding（填充）</h3><p>该字段占变长，用于将Options字段的长度补齐成4的倍数。如果Options字段的长度已经是4的倍数，则Padding字段不存在。</p>
+<p>以上是IP协议中每个字段位的详细解释，了解这些字段的作用可以帮助我们更好地理解IP数据包的结构和传输过程。</p>
+<p>如果我们要发送一个IP数据包，那么我们需要填写这些字段，并将它们放入数据包中。在数据包传输过程中，这些字段会被路由器等网络设备读取和处理，以确定数据包的发送和转发路径。</p>
+<p>需要注意的是，IP数据包在传输过程中可能会被分片。当数据包的长度超过网络设备的MTU（最大传输单元）时，它就会被分成多个小片，以便在网络中传输。分片后的数据包会在每个数据包的头部添加分片偏移和标志等信息，以便在目的地将它们重新组装成原始数据包。因此，在处理和发送IP数据包时，我们需要考虑到数据包的长度和MTU等因素。</p>
 
                 
               </div>
@@ -333,6 +356,34 @@ hexo clean &amp; hexo g &amp; hexo d
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" class="category-chain-item">网络协议</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/">#网络协议</a>
+      
+    </div>
   
 </div>
 
@@ -342,8 +393,8 @@ hexo clean &amp; hexo g &amp; hexo d
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hello Hexo</div>
-      <div>https://icoobin.github.io/2023/02/25/hello-world/</div>
+      <div>IP 协议字段位详解</div>
+      <div>https://icoobin.github.io/2023/02/27/IP-协议字段位详解/</div>
     </div>
     <div class="license-meta">
       
@@ -355,7 +406,7 @@ hexo clean &amp; hexo g &amp; hexo d
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月25日</div>
+          <div>2023年2月27日</div>
         </div>
       
       
@@ -387,15 +438,21 @@ hexo clean &amp; hexo g &amp; hexo d
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/25/%E5%B8%B8%E7%94%A8%E5%BC%80%E5%8F%91%E5%8E%9F%E5%88%99/" title="常用开发原则">
+                      <a href="/2023/02/27/UDP%E5%8D%8F%E8%AE%AE%E5%AD%97%E6%AE%B5%E4%BD%8D%E8%AF%A6%E8%A7%A3/" title="UDP 协议字段位详解">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">常用开发原则</span>
+                        <span class="hidden-mobile">UDP 协议字段位详解</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2023/02/26/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" title="排序算法">
+                        <span class="hidden-mobile">排序算法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

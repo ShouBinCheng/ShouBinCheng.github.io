@@ -4,6 +4,106 @@
   
   
   <entry>
+    <title>TCP 协议字段位详解</title>
+    <link href="/2023/02/27/TCP-%E5%8D%8F%E8%AE%AE%E5%AD%97%E6%AE%B5%E4%BD%8D%E8%AF%A6%E8%A7%A3/"/>
+    <url>/2023/02/27/TCP-%E5%8D%8F%E8%AE%AE%E5%AD%97%E6%AE%B5%E4%BD%8D%E8%AF%A6%E8%A7%A3/</url>
+    
+    <content type="html"><![CDATA[<h1 id="TCP-协议字段位详解"><a href="#TCP-协议字段位详解" class="headerlink" title="TCP 协议字段位详解"></a>TCP 协议字段位详解</h1><p>TCP（Transmission Control Protocol）协议是一种面向连接、可靠的传输协议。TCP协议头部有20个字节，其中包括以下字段：</p><ul><li>源端口号（16位）：指发送端口的端口号。</li><li>目的端口号（16位）：指接收端口的端口号。</li><li>序列号（32位）：是一个32位的无符号整数，表示在当前连接中传输的第一个数据字节的序号。</li><li>确认号（32位）：是一个32位的无符号整数，表示期望收到的下一个字节的序号。</li><li>数据偏移（4位）：指的是TCP头部中数据的起始位置。因为TCP头部的长度是可变的，所以需要这个字段来指定数据的起始位置。</li><li>保留（6位）：暂时保留，未使用。</li><li>控制位（6位）：TCP协议头部中最重要的字段，包含了6个控制位，分别为URG、ACK、PSH、RST、SYN和FIN。</li><li>窗口大小（16位）：表示接收端点的缓存大小，用来控制发送端点的发送速度。</li><li>校验和（16位）：用来检测TCP头部和数据的完整性。</li><li>紧急指针（16位）：只有在URG标志被设置时才有意义，表示紧急数据的偏移量。</li><li>选项（可变长度）：TCP头部的选项字段，长度可变。</li></ul><p>下面是TCP协议头部的位图：</p><div class="code-wrapper"><pre><code class="hljs bash"> 0                   1                   2                   3 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|          Source Port          |       Destination Port        |+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|                        Sequence Number                        |+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|                    Acknowledgment Number                      |+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|  Data |           |U|A|P|R|S|F|                               || Offset| Reserved  |R|C|S|S|Y|I|            Window             ||       |           |G|K|H|T|N|N|                               |+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|           Checksum            |         Urgent Pointer        |+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|                    Options                    |    Padding    |+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</code></pre></div><p>以上是 TCP 协议字段位的详细解释和协议头部的位图。</p><ol><li><p>三次握手和四次挥手的过程及含义。</p><p> 三次握手是建立连接时使用的过程，四次挥手是断开连接时使用的过程。三次握手的过程为：</p><ul><li>客户端发送 SYN 报文，指明客户端的初始序列号。</li><li>服务器返回 SYN+ACK 报文，指明服务器的初始序列号和确认号。</li><li>客户端返回 ACK 报文，指明客户端的确认号。</li></ul><p> 四次挥手的过程为：</p><ul><li>客户端发送 FIN 报文，请求关闭连接。</li><li>服务器返回 ACK 报文，确认收到了客户端的 FIN 报文。</li><li>服务器发送 FIN 报文，请求关闭连接。</li><li>客户端返回 ACK 报文，确认收到了服务器的 FIN 报文。</li></ul></li><li><p>TCP 的拥塞控制算法有哪些？</p><p> TCP 的拥塞控制算法有四种，分别是：慢启动、拥塞避免、快重传和快恢复。</p><ul><li>慢启动：连接建立后，TCP 发送方先将拥塞窗口 cwnd 初始化为一个较小的值，然后在每个往返时间内将 cwnd 加倍，直到出现丢包或拥塞发生。</li><li>拥塞避免：当 cwnd 达到一个阈值（ssthresh）时，cwnd 的增长就减缓为每个往返时间内只增加一个 MSS。</li><li>快重传：当发送方连续收到 3 个重复的 ACK 报文时，就立即重传对方尚未收到的报文段，以避免超时重传。</li><li>快恢复：当出现拥塞丢包时，发送方将 ssthresh 和 cwnd 更新为当前值的一半，然后继续执行拥塞避免算法。</li></ul></li><li><p>TCP 和 UDP 的区别是什么？</p><p> TCP 和 UDP 都是传输层协议，但是它们有很大的区别。TCP 是面向连接的，可靠的传输协议，而 UDP 则是无连接的、不可靠的传输协议。具体来说，TCP 提供了以下特性：</p><ul><li>可靠性：TCP 使用应答机制来保证数据的可靠传输。</li><li>面向连接：TCP 在通信前需要建立连接，通信结束后需要断开连接。</li><li>流量控制和拥塞控制：TCP 通过滑动窗口和拥塞控制算法来控制数据的传输速率。</li></ul><p> UDP 则不提供以上的特性，它更加简单、轻量级，适合于一些对可靠性要求不高的场景，如在线游戏等。</p></li></ol><p>基于 TCP 协议封装新的应用层协议时，需要注意以下问题：</p><ol><li>大端小端问题：TCP 协议头中的一些字段是多字节的，不同机器对于多字节字段的存储方式有所不同。为了解决这个问题，可以使用网络字节序（也称为大端字节序）来表示多字节字段，即始终将高位字节放在低地址处。</li><li>粘包黏包问题：由于 TCP 协议是面向流的，而应用层协议通常是面向消息的，因此在发送端，需要将一个完整的消息拆分成多个 TCP 报文段发送，同时在接收端，需要将多个 TCP 报文段组装成一个完整的消息。为了解决这个问题，可以采用以下方法：<ul><li>消息长度标记法：在消息的开头加上一个固定长度的字段，表示整个消息的长度，接收端先读取这个字段，然后读取相应长度的数据，即为一个完整的消息。</li><li>分隔符法：在消息的结尾加上一个特定的分隔符，表示一个消息的结束，接收端一直读取数据，直到读到分隔符为止，即为一个完整的消息。</li><li>固定长度法：固定每个消息的长度，接收端先读取固定长度的数据，然后将其解析为一个完整的消息。</li></ul></li></ol><p>除此之外，还需要考虑数据完整性、安全性等问题，比如可以使用消息认证码（MAC）来保证数据完整性和认证，使用加密算法来保证数据的安全性。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>网络协议</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>网络协议</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>WebSocket 协议字段位详解</title>
+    <link href="/2023/02/27/WebSocket%E5%8D%8F%E8%AE%AE%E5%AD%97%E6%AE%B5%E4%BD%8D%E8%AF%A6%E8%A7%A3/"/>
+    <url>/2023/02/27/WebSocket%E5%8D%8F%E8%AE%AE%E5%AD%97%E6%AE%B5%E4%BD%8D%E8%AF%A6%E8%A7%A3/</url>
+    
+    <content type="html"><![CDATA[<h1 id="WebSocket-协议字段位详解"><a href="#WebSocket-协议字段位详解" class="headerlink" title="WebSocket 协议字段位详解"></a>WebSocket 协议字段位详解</h1><p>WebSocket 协议是一种基于 TCP 协议的应用层协议，它是为了解决 HTTP 协议的一些缺陷而设计的。WebSocket 协议头部有 2 个或 14 个字节，其中包括以下字段：</p><ul><li>FIN（1 位）：表示该数据帧是否为一帧的最后一部分。</li><li>RSV1, RSV2, RSV3（各 1 位）：保留位，目前未使用。</li><li>Opcode（4 位）：表示数据帧的类型，包括文本、二进制、关闭连接等。</li><li>Mask（1 位）：表示是否对数据进行掩码处理，防止数据在传输过程中被篡改。</li><li>Payload Length（7 位或 7 + 16 + 64 位）：表示数据负载的长度，如果长度小于 126，则使用 7 位来表示；如果长度大于等于 126，则使用 7 + 16 位或 7 + 16 + 64 位来表示。</li><li>Masking Key（0 或 4 字节）：掩码密钥，如果 Mask 位为 1，则需要使用掩码密钥对数据进行掩码处理。</li><li>Payload Data（可变长度）：表示数据帧的负载数据。</li></ul><p>下面是 WebSocket 协议头部的位图：</p><div class="code-wrapper"><pre><code class="hljs bash"> 0                   1                   2                   3 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1+-+-+-+-+-------+-+-------------+-------------------------------+|F|R|R|R| opcode|M| Payload len |    Extended payload length    ||I|S|S|S|  (4)  |A|     (7)     |             (16/64)           ||N|V|V|V|       |S|             |   (<span class="hljs-keyword">if</span> payload len==126/127)   || |1|2|3|       |K|             |                               |+-+-+-+-+-------+-+-------------+ - - - - - - - - - - - - - - - +|     Extended payload length continued, <span class="hljs-keyword">if</span> payload len == 127  |+ - - - - - - - - - - - - - - - +-------------------------------+|                               |Masking-key, <span class="hljs-keyword">if</span> MASK <span class="hljs-built_in">set</span> to 1  |+-------------------------------+-------------------------------+| Masking-key (continued)       |          Payload Data         |+-------------------------------- - - - - - - - - - - - - - - - +:                     Payload Data continued ...                :+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +|                     Payload Data continued ...                |+---------------------------------------------------------------+</code></pre></div><p>以上是 WebSocket 协议字段位的详细解释和协议头部的位图。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>网络协议</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>网络协议</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>UDP 协议字段位详解</title>
+    <link href="/2023/02/27/UDP%E5%8D%8F%E8%AE%AE%E5%AD%97%E6%AE%B5%E4%BD%8D%E8%AF%A6%E8%A7%A3/"/>
+    <url>/2023/02/27/UDP%E5%8D%8F%E8%AE%AE%E5%AD%97%E6%AE%B5%E4%BD%8D%E8%AF%A6%E8%A7%A3/</url>
+    
+    <content type="html"><![CDATA[<h1 id="UDP-协议字段位详解"><a href="#UDP-协议字段位详解" class="headerlink" title="UDP 协议字段位详解"></a>UDP 协议字段位详解</h1><p>UDP（User Datagram Protocol）是一种无连接的基于 IP 协议的传输层协议，与TCP相比，UDP协议具有传输速度快、实时性强等优点。在UDP协议中，数据被分割成数据报，每个数据报都包含了一些字段。下面是UDP协议每个字段位的详解：</p><ul><li>**源端口(Source Port)**：这个字段占用16个比特位，表示发送端口号。它是在UDP报文中标识发送方应用程序的端口号，用于接收方回复信息时确定回复的是哪个端口。</li><li>**目的端口(Destination Port)**：这个字段占用16个比特位，表示接收端口号。它是在UDP报文中标识接收方应用程序的端口号，用于接收发送方发送的信息。</li><li>**长度(Length)**：这个字段占用16个比特位，表示UDP数据报的长度。它表示整个数据报的长度，包括UDP报头和UDP数据。</li><li>**校验和(Checksum)**：这个字段占用16个比特位，表示UDP数据报的校验和。它用于检验UDP数据报在传输过程中是否发生了错误。</li></ul><p>下面是UDP协议的字段位图：</p><div class="code-wrapper"><pre><code class="hljs bash"> 0      7 8     15 16    23 24    31+--------+--------+--------+--------+|     源端口号     |     目的端口号    |+--------+--------+--------+--------+|           长度             |校验和  |+--------+--------+--------+--------+|              数据           ....   |+--------+--------+--------+--------+</code></pre></div><p>以上是UDP协议每个字段位的详解和协议位图。</p><p>UDP协议是一种无连接的传输层协议。在UDP协议中，数据被分割成数据报，每个数据报都包含了一些字段。UDP协议具有传输速度快、实时性强等优点，但是不保证可靠性和数据的有序性。UDP对传输的数据没有任何担保，只是尽力去传输。当数据丢失或者出现错误时，UDP不会进行重传或者纠错。因此，UDP适用于数据量小、对可靠性要求不高的场景，例如在线游戏、实时视频和音频传输等。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>网络协议</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>网络协议</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>IP 协议字段位详解</title>
+    <link href="/2023/02/27/IP-%E5%8D%8F%E8%AE%AE%E5%AD%97%E6%AE%B5%E4%BD%8D%E8%AF%A6%E8%A7%A3/"/>
+    <url>/2023/02/27/IP-%E5%8D%8F%E8%AE%AE%E5%AD%97%E6%AE%B5%E4%BD%8D%E8%AF%A6%E8%A7%A3/</url>
+    
+    <content type="html"><![CDATA[<h1 id="IP-协议字段位详解"><a href="#IP-协议字段位详解" class="headerlink" title="IP 协议字段位详解"></a>IP 协议字段位详解</h1><p>IP（Internet Protocol）协议是互联网的核心协议之一，它负责将网络层的数据包从源地址传输到目的地址。在IP数据包中，有许多字段用于描述数据包的内容和传输信息。下面将详细介绍IP协议中每个字段位的含义和作用。</p><h2 id="IP协议位图"><a href="#IP协议位图" class="headerlink" title="IP协议位图"></a>IP协议位图</h2><p>以下是IP协议的位图表示，其中包括了每个字段位的位置和长度：</p><div class="code-wrapper"><pre><code class="hljs bash">0                   1                   2                   30 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|Version|  IHL  |Type of Service|          Total Length         |+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|         Identification        |Flags|      Fragment Offset    |+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|  Time to Live |    Protocol   |         Header Checksum       |+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|                       Source Address                          |+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|                    Destination Address                        |+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|                    Options                    |    Padding    |+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</code></pre></div><h2 id="IP协议字段位详解"><a href="#IP协议字段位详解" class="headerlink" title="IP协议字段位详解"></a>IP协议字段位详解</h2><h3 id="Version（版本）"><a href="#Version（版本）" class="headerlink" title="Version（版本）"></a>Version（版本）</h3><p>该字段占4位，用于指定IP协议版本号。当前IP协议版本为IPv4，其版本号为4。</p><h3 id="IHL（报头长度）"><a href="#IHL（报头长度）" class="headerlink" title="IHL（报头长度）"></a>IHL（报头长度）</h3><p>该字段占4位，用于指定IP数据包报头的长度，以32位字长为单位。因此，IHL字段的值是4的倍数。最小值为5，最大值为15。</p><h3 id="Type-of-Service（服务类型）"><a href="#Type-of-Service（服务类型）" class="headerlink" title="Type of Service（服务类型）"></a>Type of Service（服务类型）</h3><p>该字段占8位，用于指定IP数据包的服务类型。其中，前3位为优先级，后5位为服务类型。该字段已被DSCP所取代。</p><h3 id="Total-Length（总长度）"><a href="#Total-Length（总长度）" class="headerlink" title="Total Length（总长度）"></a>Total Length（总长度）</h3><p>该字段占16位，用于指定IP数据包的总长度，以字节为单位。该长度包括IP数据包的报头和数据负载。</p><h3 id="Identification（标识）"><a href="#Identification（标识）" class="headerlink" title="Identification（标识）"></a>Identification（标识）</h3><p>该字段占16位，用于标识IP数据包的唯一标识符。每个IP数据包都应该有一个唯一的标识符。</p><h3 id="Flags（标志）"><a href="#Flags（标志）" class="headerlink" title="Flags（标志）"></a>Flags（标志）</h3><p>该字段占3位，用于指定IP数据包的分片信息。其中，第1位为Reserved，第2位为Don’t Fragment（DF），第3位为More Fragments（MF）。</p><h3 id="Fragment-Offset（分片偏移）"><a href="#Fragment-Offset（分片偏移）" class="headerlink" title="Fragment Offset（分片偏移）"></a>Fragment Offset（分片偏移）</h3><p>该字段占13位，用于指定IP数据包在分片后的偏移量，以8字节为单位。该字段只在MF标志位被设置时有效。</p><h3 id="Time-to-Live（生存时间）"><a href="#Time-to-Live（生存时间）" class="headerlink" title="Time to Live（生存时间）"></a>Time to Live（生存时间）</h3><p>该字段占8位，用于指定IP数据包在网络中的生存时间。每次经过一个路由器，该字段的值就会减1，当该字段的值为0时，数据包将被丢弃。</p><h3 id="Protocol（协议）"><a href="#Protocol（协议）" class="headerlink" title="Protocol（协议）"></a>Protocol（协议）</h3><p>该字段占8位，用于指定IP数据包中的上层协议类型。常见的协议类型有TCP、UDP和ICMP等。</p><h3 id="Header-Checksum（报头校验和）"><a href="#Header-Checksum（报头校验和）" class="headerlink" title="Header Checksum（报头校验和）"></a>Header Checksum（报头校验和）</h3><p>该字段占16位，用于校验IP数据包报头的正确性。校验和的计算方法是将报头中的每个16位字加起来，再将结果按位取反。</p><h3 id="Source-Address（源地址）"><a href="#Source-Address（源地址）" class="headerlink" title="Source Address（源地址）"></a>Source Address（源地址）</h3><p>该字段占32位，用于指定IP数据包的源地址。</p><h3 id="Destination-Address（目的地址）"><a href="#Destination-Address（目的地址）" class="headerlink" title="Destination Address（目的地址）"></a>Destination Address（目的地址）</h3><p>该字段占32位，用于指定IP数据包的目的地址。</p><h3 id="Options（选项）"><a href="#Options（选项）" class="headerlink" title="Options（选项）"></a>Options（选项）</h3><p>该字段占变长，用于在IP数据包中添加一些可选的信息，如记录路径、时间戳等。如果该字段不存在，则用0填充。</p><h3 id="Padding（填充）"><a href="#Padding（填充）" class="headerlink" title="Padding（填充）"></a>Padding（填充）</h3><p>该字段占变长，用于将Options字段的长度补齐成4的倍数。如果Options字段的长度已经是4的倍数，则Padding字段不存在。</p><p>以上是IP协议中每个字段位的详细解释，了解这些字段的作用可以帮助我们更好地理解IP数据包的结构和传输过程。</p><p>如果我们要发送一个IP数据包，那么我们需要填写这些字段，并将它们放入数据包中。在数据包传输过程中，这些字段会被路由器等网络设备读取和处理，以确定数据包的发送和转发路径。</p><p>需要注意的是，IP数据包在传输过程中可能会被分片。当数据包的长度超过网络设备的MTU（最大传输单元）时，它就会被分成多个小片，以便在网络中传输。分片后的数据包会在每个数据包的头部添加分片偏移和标志等信息，以便在目的地将它们重新组装成原始数据包。因此，在处理和发送IP数据包时，我们需要考虑到数据包的长度和MTU等因素。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>网络协议</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>网络协议</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>排序算法</title>
     <link href="/2023/02/26/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"/>
     <url>/2023/02/26/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</url>
