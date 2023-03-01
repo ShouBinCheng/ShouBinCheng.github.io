@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Objective-C weak 指针源码解析</title>
+    <link href="/2023/03/01/Objective-C-weak-%E6%8C%87%E9%92%88%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/"/>
+    <url>/2023/03/01/Objective-C-weak-%E6%8C%87%E9%92%88%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</url>
+    
+    <content type="html"><![CDATA[<h1 id="weak-指针"><a href="#weak-指针" class="headerlink" title="weak 指针"></a>weak 指针</h1><h2 id="底层管理"><a href="#底层管理" class="headerlink" title="底层管理"></a>底层管理</h2><p>Objective-C 维护 weak 指针的哈希表的源码主要在objc-weak.mm文件中。这个文件包含了Objective-C runtime中维护弱引用表的相关代码，比如weak指针的创建、释放、读取和写入等操作。其中，弱引用表是用一个哈希表来实现的，哈希表的每个桶都是一个指向对象的指针，当对象被释放时，哈希表会自动将这个指针设置为nil。</p><ul><li>这里注释已经说明是存放在全局的 weak 引用表中。</li><li><code>weak_entry_t \*weak_entries;</code> 每个对象的 weak 引用关系</li></ul><div class="code-wrapper"><pre><code class="hljs c">** * The global weak references table. Stores object ids as keys, * and <span class="hljs-type">weak_entry_t</span> structs as their values. */<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">weak_table_t</span> &#123;</span>    <span class="hljs-type">weak_entry_t</span> *weak_entries;    <span class="hljs-type">size_t</span>    num_entries;    <span class="hljs-type">uintptr_t</span> mask;    <span class="hljs-type">uintptr_t</span> max_hash_displacement;&#125;;</code></pre></div><ul><li><code>weak_referrer_t \*referrers;</code> 存储了指向该对象的所有指针的地址</li></ul><div class="code-wrapper"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">weak_entry_t</span> &#123;</span>    DisguisedPtr&lt;objc_object&gt; referent;    <span class="hljs-class"><span class="hljs-keyword">union</span> &#123;</span>        <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span>            <span class="hljs-type">weak_referrer_t</span> *referrers;            <span class="hljs-type">uintptr_t</span>        out_of_line_ness : <span class="hljs-number">2</span>;            <span class="hljs-type">uintptr_t</span>        num_refs : PTR_MINUS_2;            <span class="hljs-type">uintptr_t</span>        mask;            <span class="hljs-type">uintptr_t</span>        max_hash_displacement;        &#125;;        <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span>            <span class="hljs-comment">// out_of_line_ness field is low bits of inline_referrers[1]</span>            <span class="hljs-type">weak_referrer_t</span>  inline_referrers[WEAK_INLINE_COUNT];        &#125;;    &#125;;    <span class="hljs-type">bool</span> <span class="hljs-title function_">out_of_line</span><span class="hljs-params">()</span> &#123;        <span class="hljs-keyword">return</span> (out_of_line_ness == REFERRERS_OUT_OF_LINE);    &#125;    <span class="hljs-type">weak_entry_t</span>&amp; operator=(<span class="hljs-type">const</span> <span class="hljs-type">weak_entry_t</span>&amp; other) &#123;        <span class="hljs-built_in">memcpy</span>(this, &amp;other, <span class="hljs-keyword">sizeof</span>(other));        <span class="hljs-keyword">return</span> *this;    &#125;    <span class="hljs-type">weak_entry_t</span>(objc_object *newReferent, objc_object **newReferrer)        : referent(newReferent)    &#123;        inline_referrers[<span class="hljs-number">0</span>] = newReferrer;        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; WEAK_INLINE_COUNT; i++) &#123;            inline_referrers[i] = nil;        &#125;    &#125;&#125;;</code></pre></div><ul><li>用对象的地址 hash 值当 key：</li></ul><div class="code-wrapper"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">if</span> __LP64__</span><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">uint32_t</span> <span class="hljs-title function_">ptr_hash</span><span class="hljs-params">(<span class="hljs-type">uint64_t</span> key)</span>&#123;    key ^= key &gt;&gt; <span class="hljs-number">4</span>;<span class="hljs-comment">//右移动 4 位再亦或自己</span>    key *= <span class="hljs-number">0x8a970be7488fda55</span>;<span class="hljs-comment">//乘以一个常量</span>    key ^= __builtin_bswap64(key);<span class="hljs-comment">//字节序翻转再亦或自己</span>    <span class="hljs-keyword">return</span> (<span class="hljs-type">uint32_t</span>)key;<span class="hljs-comment">//得到一个用地址 hash 的 key</span>&#125;<span class="hljs-meta">#<span class="hljs-keyword">else</span></span><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">uint32_t</span> <span class="hljs-title function_">ptr_hash</span><span class="hljs-params">(<span class="hljs-type">uint32_t</span> key)</span>&#123;    key ^= key &gt;&gt; <span class="hljs-number">4</span>;    key *= <span class="hljs-number">0x5052acdb</span>;    key ^= __builtin_bswap32(key);    <span class="hljs-keyword">return</span> key;&#125;<span class="hljs-meta">#<span class="hljs-keyword">endif</span></span></code></pre></div><ul><li>对象 dealloc 时会调用 weak_clear_no_lock 方法</li><li>从全局的 weak table 中以当前对象地址 hash 为 key 取出 entry。</li><li>再遍历 entry 中的 referrers 指向该对象的所有 weak 指针地址赋值为 nil</li><li>最后从全局哈希表中移除 entry。</li></ul><div class="code-wrapper"><pre><code class="hljs c"><span class="hljs-comment">/** </span><span class="hljs-comment"> * Called by dealloc; nils out all weak pointers that point to the </span><span class="hljs-comment"> * provided object so that they can no longer be used.</span><span class="hljs-comment"> * </span><span class="hljs-comment"> * @param weak_table </span><span class="hljs-comment"> * @param referent The object being deallocated. </span><span class="hljs-comment"> */</span><span class="hljs-type">void</span> <span class="hljs-title function_">weak_clear_no_lock</span><span class="hljs-params">(<span class="hljs-type">weak_table_t</span> *weak_table, id referent_id)</span> &#123;    objc_object *referent = (objc_object *)referent_id;    <span class="hljs-type">weak_entry_t</span> *entry = weak_entry_for_referent(weak_table, referent);    <span class="hljs-keyword">if</span> (entry == nil) &#123;        <span class="hljs-comment">/// XXX shouldn&#x27;t happen, but does with mismatched CF/objc</span>        <span class="hljs-comment">//printf(&quot;XXX no entry for clear deallocating %p\n&quot;, referent);</span>        <span class="hljs-keyword">return</span>;    &#125;    <span class="hljs-comment">// zero out references</span>    <span class="hljs-type">weak_referrer_t</span> *referrers;    <span class="hljs-type">size_t</span> count;        <span class="hljs-keyword">if</span> (entry-&gt;out_of_line()) &#123;        referrers = entry-&gt;referrers;        count = TABLE_SIZE(entry);    &#125;     <span class="hljs-keyword">else</span> &#123;        referrers = entry-&gt;inline_referrers;        count = WEAK_INLINE_COUNT;    &#125;        <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = <span class="hljs-number">0</span>; i &lt; count; ++i) &#123;        objc_object **referrer = referrers[i];        <span class="hljs-keyword">if</span> (referrer) &#123;            <span class="hljs-keyword">if</span> (*referrer == referent) &#123;                *referrer = nil;            &#125;            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (*referrer) &#123;                _objc_inform(<span class="hljs-string">&quot;__weak variable at %p holds %p instead of %p. &quot;</span>                             <span class="hljs-string">&quot;This is probably incorrect use of &quot;</span>                             <span class="hljs-string">&quot;objc_storeWeak() and objc_loadWeak(). &quot;</span>                             <span class="hljs-string">&quot;Break on objc_weak_error to debug.\n&quot;</span>,                              referrer, (<span class="hljs-type">void</span>*)*referrer, (<span class="hljs-type">void</span>*)referent);                objc_weak_error();            &#125;        &#125;    &#125;        weak_entry_remove(weak_table, entry);&#125;</code></pre></div><h2 id="objc-weak-中的-C-方法"><a href="#objc-weak-中的-C-方法" class="headerlink" title="objc-weak 中的 C 方法"></a>objc-weak 中的 C 方法</h2><ul><li><code>weak_register_no_lock(weak_table_t *weak_table, id referent,                     id *referrer, WeakRegisterDeallocatingOptions deallocatingOptions)</code> : 添加一个（对象，弱指针）对到弱表。</li><li><code>weak_unregister_no_lock(weak_table_t *weak_table, id referent, id *referrer)</code> 从弱表中删除一个（对象，弱指针）对。</li><li><code>weak_is_registered_no_lock(weak_table_t *weak_table, id referent)</code> 一个对象在某处释放被 weak 引用。</li><li><code>void weak_clear_no_lock(weak_table_t *weak_table, id referent)</code> 调用对象销毁。将所有剩余的弱指针设置为 nil。</li></ul><h2 id="源码地址"><a href="#源码地址" class="headerlink" title="源码地址"></a>源码地址</h2><ul><li><a href="https://github1s.com/apple-oss-distributions/objc4/blob/HEAD/runtime/objc-weak.h">objc-weak.h</a></li><li><a href="https://github1s.com/apple-oss-distributions/objc4/blob/HEAD/runtime/objc-weak.mm">objc-weak.mm</a></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>iOS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>iOS</tag>
+      
+      <tag>Objective-C</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>160. 相交链表</title>
     <link href="/2023/03/01/leetcode/160-%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/"/>
     <url>/2023/03/01/leetcode/160-%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/</url>
@@ -20,9 +47,9 @@
     
     <tags>
       
-      <tag>链表</tag>
-      
       <tag>LeetCode</tag>
+      
+      <tag>链表</tag>
       
     </tags>
     
@@ -72,9 +99,9 @@
     
     <tags>
       
-      <tag>链表</tag>
-      
       <tag>LeetCode</tag>
+      
+      <tag>链表</tag>
       
       <tag>双指针</tag>
       
@@ -101,9 +128,9 @@
     
     <tags>
       
-      <tag>数据结构与算法</tag>
-      
       <tag>链表</tag>
+      
+      <tag>数据结构与算法</tag>
       
     </tags>
     
@@ -307,9 +334,9 @@
     
     <tags>
       
-      <tag>设计模式</tag>
-      
       <tag>iOS</tag>
+      
+      <tag>设计模式</tag>
       
       <tag>架构</tag>
       
@@ -336,9 +363,9 @@
     
     <tags>
       
-      <tag>Swift</tag>
-      
       <tag>设计模式</tag>
+      
+      <tag>Swift</tag>
       
     </tags>
     
@@ -363,9 +390,9 @@
     
     <tags>
       
-      <tag>Swift</tag>
-      
       <tag>设计模式</tag>
+      
+      <tag>Swift</tag>
       
     </tags>
     
@@ -390,9 +417,9 @@
     
     <tags>
       
-      <tag>Swift</tag>
-      
       <tag>设计模式</tag>
+      
+      <tag>Swift</tag>
       
     </tags>
     
@@ -417,9 +444,9 @@
     
     <tags>
       
-      <tag>Swift</tag>
-      
       <tag>设计模式</tag>
+      
+      <tag>Swift</tag>
       
     </tags>
     
