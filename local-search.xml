@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>104. 二叉树的最大深度</title>
+    <link href="/2023/03/01/leetcode/104-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6/"/>
+    <url>/2023/03/01/leetcode/104-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6/</url>
+    
+    <content type="html"><![CDATA[<h1 id="104-二叉树的最大深度"><a href="#104-二叉树的最大深度" class="headerlink" title="104. 二叉树的最大深度"></a>104. 二叉树的最大深度</h1><p>给定一个二叉树，找出其最大深度。</p><p> 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。</p><p> 说明: 叶子节点是指没有子节点的节点。</p><p> 示例：<br> 给定二叉树 [3,9,20,null,null,15,7]，</p><div class="code-wrapper"><pre><code class="hljs">    3   / \  9  20    /  \   15   7</code></pre></div><p> 返回它的最大深度 3 。</p><p> 来源：力扣（LeetCode）<br> 链接：<a href="https://leetcode.cn/problems/maximum-depth-of-binary-tree">https://leetcode.cn/problems/maximum-depth-of-binary-tree</a><br> 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p><p>解题代码：</p><div class="code-wrapper"><pre><code class="hljs swift"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Soluton</span> &#123;    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TreeNode</span> &#123;        <span class="hljs-keyword">public</span> <span class="hljs-keyword">var</span> val: <span class="hljs-type">Int</span>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">var</span> left: <span class="hljs-type">TreeNode</span>?        <span class="hljs-keyword">public</span> <span class="hljs-keyword">var</span> right: <span class="hljs-type">TreeNode</span>?        <span class="hljs-keyword">public</span> <span class="hljs-keyword">init</span>() &#123; <span class="hljs-keyword">self</span>.val <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; <span class="hljs-keyword">self</span>.left <span class="hljs-operator">=</span> <span class="hljs-literal">nil</span>; <span class="hljs-keyword">self</span>.right <span class="hljs-operator">=</span> <span class="hljs-literal">nil</span>; &#125;        <span class="hljs-keyword">public</span> <span class="hljs-keyword">init</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">val</span>: <span class="hljs-type">Int</span>) &#123; <span class="hljs-keyword">self</span>.val <span class="hljs-operator">=</span> val; <span class="hljs-keyword">self</span>.left <span class="hljs-operator">=</span> <span class="hljs-literal">nil</span>; <span class="hljs-keyword">self</span>.right <span class="hljs-operator">=</span> <span class="hljs-literal">nil</span>; &#125;        <span class="hljs-keyword">public</span> <span class="hljs-keyword">init</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">val</span>: <span class="hljs-type">Int</span>, <span class="hljs-keyword">_</span> <span class="hljs-params">left</span>: <span class="hljs-type">TreeNode</span>?, <span class="hljs-keyword">_</span> <span class="hljs-params">right</span>: <span class="hljs-type">TreeNode</span>?) &#123;            <span class="hljs-keyword">self</span>.val <span class="hljs-operator">=</span> val            <span class="hljs-keyword">self</span>.left <span class="hljs-operator">=</span> left            <span class="hljs-keyword">self</span>.right <span class="hljs-operator">=</span> right        &#125;    &#125;        <span class="hljs-comment">/// 解题思路：广度优先搜索 BFS（Breadth First Search）</span>    <span class="hljs-comment">/// - 时间复杂度为 O(n)</span>    <span class="hljs-comment">/// - 空间复杂度为 O(w)，其中 W为二叉树的最大宽度，即某一层节点数的最大值</span>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">maxDepth</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">root</span>: <span class="hljs-type">TreeNode</span>?) -&gt; <span class="hljs-type">Int</span> &#123;        <span class="hljs-keyword">guard</span> <span class="hljs-keyword">let</span> root <span class="hljs-operator">=</span> root <span class="hljs-keyword">else</span> &#123;            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>        &#125;        <span class="hljs-keyword">var</span> queue <span class="hljs-operator">=</span> [root]        <span class="hljs-keyword">var</span> depth <span class="hljs-operator">=</span> <span class="hljs-number">0</span>        <span class="hljs-keyword">while</span> <span class="hljs-operator">!</span>queue.isEmpty &#123;            depth <span class="hljs-operator">+=</span> <span class="hljs-number">1</span>            <span class="hljs-keyword">let</span> size <span class="hljs-operator">=</span> queue.count            <span class="hljs-keyword">for</span> <span class="hljs-keyword">_</span> <span class="hljs-keyword">in</span> <span class="hljs-number">0</span><span class="hljs-operator">..&lt;</span>size &#123;                <span class="hljs-keyword">let</span> node <span class="hljs-operator">=</span> queue.remove(at: <span class="hljs-number">0</span>)                <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> left <span class="hljs-operator">=</span> node.left &#123;                    queue.append(left)                &#125;                <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> right <span class="hljs-operator">=</span> node.right &#123;                    queue.append(right)                &#125;            &#125;        &#125;        <span class="hljs-keyword">return</span> depth    &#125;        <span class="hljs-comment">/// 解题思路:   深度优先搜索 DFS (Depth First Search)</span>    <span class="hljs-comment">/// 使用递归求解，取左树和右数深度的最大值加上当前层 1</span>    <span class="hljs-comment">/// node 为空则 return 0</span>    <span class="hljs-comment">/// - 时间复杂度 O(n)，n为二叉树的节点数</span>    <span class="hljs-comment">/// - 空间复杂度 O(height), height 表示二叉树的高度，递归函数需要栈空间。</span>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">maxDepth2</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">root</span>: <span class="hljs-type">TreeNode</span>?) -&gt; <span class="hljs-type">Int</span> &#123;        <span class="hljs-keyword">if</span> root <span class="hljs-operator">==</span> <span class="hljs-literal">nil</span> &#123;            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>        &#125;        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(maxDepth(root<span class="hljs-operator">?</span>.left), maxDepth(root<span class="hljs-operator">?</span>.right)) <span class="hljs-operator">+</span> <span class="hljs-number">1</span>    &#125;        <span class="hljs-comment">/// 数组转树</span>    <span class="hljs-comment">/// 特点是，左节点永远指向 2*i + 1， 有节点指向 2*i+2</span>    <span class="hljs-comment">/// 遍历完数组就可以生成树</span>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">createTreeWith</span>(<span class="hljs-params">array</span>: [<span class="hljs-type">Int</span>?]) -&gt; <span class="hljs-type">TreeNode</span>? &#123;        <span class="hljs-keyword">if</span> array.first <span class="hljs-operator">==</span> <span class="hljs-literal">nil</span> &#123;            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>        &#125;        <span class="hljs-keyword">let</span> nodes <span class="hljs-operator">=</span> array.map &#123; n <span class="hljs-keyword">in</span>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> num <span class="hljs-operator">=</span> n &#123;                <span class="hljs-keyword">return</span> <span class="hljs-type">Optional</span>(<span class="hljs-type">TreeNode</span>(num))            &#125; <span class="hljs-keyword">else</span> &#123;                <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>            &#125;        &#125;                <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span><span class="hljs-operator">..&lt;</span>nodes.count &#123;            <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> node <span class="hljs-operator">=</span> nodes[i] &#123;                <span class="hljs-keyword">let</span> leftIndex <span class="hljs-operator">=</span> <span class="hljs-number">2</span><span class="hljs-operator">*</span>i <span class="hljs-operator">+</span> <span class="hljs-number">1</span>                <span class="hljs-keyword">let</span> rightIndex <span class="hljs-operator">=</span> <span class="hljs-number">2</span><span class="hljs-operator">*</span>i <span class="hljs-operator">+</span> <span class="hljs-number">2</span>                <span class="hljs-keyword">if</span> leftIndex <span class="hljs-operator">&lt;</span> nodes.count &#123;                    node.left <span class="hljs-operator">=</span> nodes[leftIndex]                &#125;                <span class="hljs-keyword">if</span> rightIndex <span class="hljs-operator">&lt;</span> nodes.count &#123;                    node.right <span class="hljs-operator">=</span> nodes[rightIndex]                &#125;            &#125;        &#125;        <span class="hljs-keyword">return</span> nodes[<span class="hljs-number">0</span>]    &#125;&#125;</code></pre></div><p>测试用例：</p><div class="code-wrapper"><pre><code class="hljs swift"><span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UnitTestting</span>: <span class="hljs-title class_">XCTestCase</span> &#123;<span class="hljs-comment">/// 104. 二叉树的最大深度</span><span class="hljs-keyword">func</span> <span class="hljs-title function_">testSolution</span>() &#123;<span class="hljs-keyword">let</span> solution <span class="hljs-operator">=</span> <span class="hljs-type">Solution_104</span>()                <span class="hljs-keyword">do</span> &#123;            <span class="hljs-keyword">let</span> nums <span class="hljs-operator">=</span> [<span class="hljs-number">3</span>,<span class="hljs-number">9</span>,<span class="hljs-number">20</span>,<span class="hljs-literal">nil</span>,<span class="hljs-literal">nil</span>,<span class="hljs-number">15</span>,<span class="hljs-number">7</span>]            <span class="hljs-keyword">let</span> result <span class="hljs-operator">=</span> <span class="hljs-number">3</span>            <span class="hljs-keyword">let</span> root <span class="hljs-operator">=</span> solution.createTreeWith(array: nums)            <span class="hljs-type">XCTAssert</span>(result <span class="hljs-operator">==</span> solution.maxDepth(root))        &#125;&#125;&#125;</code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>LeetCode</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>LeetCode</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>141. 环形链表</title>
     <link href="/2023/03/01/leetcode/141.%20%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/"/>
     <url>/2023/03/01/leetcode/141.%20%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/</url>
@@ -253,9 +278,9 @@
     
     <tags>
       
-      <tag>设计模式</tag>
-      
       <tag>iOS</tag>
+      
+      <tag>设计模式</tag>
       
       <tag>架构</tag>
       
@@ -282,9 +307,9 @@
     
     <tags>
       
-      <tag>Swift</tag>
-      
       <tag>设计模式</tag>
+      
+      <tag>Swift</tag>
       
     </tags>
     
@@ -309,9 +334,9 @@
     
     <tags>
       
-      <tag>Swift</tag>
-      
       <tag>设计模式</tag>
+      
+      <tag>Swift</tag>
       
     </tags>
     
@@ -336,9 +361,9 @@
     
     <tags>
       
-      <tag>Swift</tag>
-      
       <tag>设计模式</tag>
+      
+      <tag>Swift</tag>
       
     </tags>
     
@@ -363,9 +388,9 @@
     
     <tags>
       
-      <tag>Swift</tag>
-      
       <tag>设计模式</tag>
+      
+      <tag>Swift</tag>
       
     </tags>
     
