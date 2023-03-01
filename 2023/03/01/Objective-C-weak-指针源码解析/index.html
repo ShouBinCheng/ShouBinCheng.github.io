@@ -16,15 +16,15 @@
   <meta name="author" content="程守斌">
   <meta name="keywords" content="">
   
-    <meta name="description" content="weak 指针底层管理Objective-C 维护 weak 指针的哈希表的源码主要在objc-weak.mm文件中。这个文件包含了Objective-C runtime中维护弱引用表的相关代码，比如weak指针的创建、释放、读取和写入等操作。其中，弱引用表是用一个哈希表来实现的，哈希表的每个桶都是一个指向对象的指针，当对象被释放时，哈希表会自动将这个指针设置为nil。  这里注释已经说明是存放在">
+    <meta name="description" content="weak 指针原理底层管理Objective-C 维护 weak 指针的哈希表的源码主要在objc-weak.mm文件中。这个文件包含了Objective-C runtime中维护弱引用表的相关代码，比如weak指针的创建、释放、读取和写入等操作。其中，弱引用表是用一个哈希表来实现的，哈希表的每个桶都是一个指向对象的指针，当对象被释放时，哈希表会自动将这个指针设置为nil。  这里注释已经说明是存">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Objective-C weak 指针源码解析">
 <meta property="og:url" content="https://icoobin.github.io/2023/03/01/Objective-C-weak-%E6%8C%87%E9%92%88%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/index.html">
 <meta property="og:site_name" content="iCoobin">
-<meta property="og:description" content="weak 指针底层管理Objective-C 维护 weak 指针的哈希表的源码主要在objc-weak.mm文件中。这个文件包含了Objective-C runtime中维护弱引用表的相关代码，比如weak指针的创建、释放、读取和写入等操作。其中，弱引用表是用一个哈希表来实现的，哈希表的每个桶都是一个指向对象的指针，当对象被释放时，哈希表会自动将这个指针设置为nil。  这里注释已经说明是存放在">
+<meta property="og:description" content="weak 指针原理底层管理Objective-C 维护 weak 指针的哈希表的源码主要在objc-weak.mm文件中。这个文件包含了Objective-C runtime中维护弱引用表的相关代码，比如weak指针的创建、释放、读取和写入等操作。其中，弱引用表是用一个哈希表来实现的，哈希表的每个桶都是一个指向对象的指针，当对象被释放时，哈希表会自动将这个指针设置为nil。  这里注释已经说明是存">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-01T15:06:51.000Z">
-<meta property="article:modified_time" content="2023-03-01T16:04:13.253Z">
+<meta property="article:modified_time" content="2023-03-01T16:07:24.915Z">
 <meta property="article:author" content="程守斌">
 <meta property="article:tag" content="iOS">
 <meta property="article:tag" content="Objective-C">
@@ -313,7 +313,7 @@
             
               <div class="markdown-body">
                 
-                <h1 id="weak-指针"><a href="#weak-指针" class="headerlink" title="weak 指针"></a>weak 指针</h1><h2 id="底层管理"><a href="#底层管理" class="headerlink" title="底层管理"></a>底层管理</h2><p>Objective-C 维护 weak 指针的哈希表的源码主要在objc-weak.mm文件中。这个文件包含了Objective-C runtime中维护弱引用表的相关代码，比如weak指针的创建、释放、读取和写入等操作。其中，弱引用表是用一个哈希表来实现的，哈希表的每个桶都是一个指向对象的指针，当对象被释放时，哈希表会自动将这个指针设置为nil。</p>
+                <h1 id="weak-指针原理"><a href="#weak-指针原理" class="headerlink" title="weak 指针原理"></a>weak 指针原理</h1><h2 id="底层管理"><a href="#底层管理" class="headerlink" title="底层管理"></a>底层管理</h2><p>Objective-C 维护 weak 指针的哈希表的源码主要在objc-weak.mm文件中。这个文件包含了Objective-C runtime中维护弱引用表的相关代码，比如weak指针的创建、释放、读取和写入等操作。其中，弱引用表是用一个哈希表来实现的，哈希表的每个桶都是一个指向对象的指针，当对象被释放时，哈希表会自动将这个指针设置为nil。</p>
 <ul>
 <li>这里注释已经说明是存放在全局的 weak 引用表中。</li>
 <li><code>weak_entry_t \*weak_entries;</code> 每个对象的 weak 引用关系</li>
