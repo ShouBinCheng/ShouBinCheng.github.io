@@ -24,7 +24,7 @@
 <meta property="og:description" content="Objective-C 开发中被忽略的内存对齐什么是结构体内存对齐结构体内存对齐是指编译器在给结构体分配内存时，为了提高内存访问效率，在结构体的成员变量之间加上一些空余的字节。这些空余的字节的大小取决于编译器的对齐方式和结构体成员变量的大小。 在默认情况下，编译器会按照结构体成员变量大小的最大值来进行对齐，即按照 8 字节对齐。因此，结构体中的 int 类型变量会被对齐到 4 字节的倍数上，dou">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-02T11:14:19.000Z">
-<meta property="article:modified_time" content="2023-03-02T12:21:52.371Z">
+<meta property="article:modified_time" content="2023-03-02T12:23:24.539Z">
 <meta property="article:author" content="程守斌">
 <meta property="article:tag" content="iOS">
 <meta property="article:tag" content="Objective-C">
@@ -420,7 +420,7 @@ use size:32</code></pre></div>
 
 <h2 id="最坏情况"><a href="#最坏情况" class="headerlink" title="最坏情况"></a>最坏情况</h2><ul>
 <li>最坏的情况就是长短类型交替声明</li>
-<li>如下：查看内存可见，只需要 4 字节的每个 Int 型本来都独享了 8 个字节</li>
+<li>如下：查看内存可见，本来只需要 4 字节的每个 Int 型都独享了 8 个字节</li>
 </ul>
 <div class="code-wrapper"><pre><code class="hljs Objective-C">@interface Person : NSObject &#123;
     @public
