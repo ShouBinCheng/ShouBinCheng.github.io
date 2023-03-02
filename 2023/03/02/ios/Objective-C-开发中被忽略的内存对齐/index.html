@@ -24,7 +24,7 @@
 <meta property="og:description" content="Objective-C 开发中被忽略的内存对齐什么是结构体内存对齐结构体内存对齐是指编译器在给结构体分配内存时，为了提高内存访问效率，在结构体的成员变量之间加上一些空余的字节。这些空余的字节的大小取决于编译器的对齐方式和结构体成员变量的大小。 在默认情况下，编译器会按照结构体成员变量大小的最大值来进行对齐，即按照 8 字节对齐。因此，结构体中的 int 类型变量会被对齐到 4 字节的倍数上，dou">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-02T11:14:19.000Z">
-<meta property="article:modified_time" content="2023-03-02T12:19:09.284Z">
+<meta property="article:modified_time" content="2023-03-02T12:21:52.371Z">
 <meta property="article:author" content="程守斌">
 <meta property="article:tag" content="iOS">
 <meta property="article:tag" content="Objective-C">
@@ -378,7 +378,7 @@ use size:32</code></pre></div>
 </ul>
 <h2 id="养成好开发习惯"><a href="#养成好开发习惯" class="headerlink" title="养成好开发习惯"></a>养成好开发习惯</h2><ul>
 <li>基于对系统内存对齐的认识，我们应该养成好的开发习惯</li>
-<li>可以吸管型的将长类型的属性声明在前面，这样就可以很好的利用好结构体内存对齐特性，避免更多的内存浪费</li>
+<li>可以养成习惯的将长类型的属性声明在前面，这样就可以很好的利用好结构体内存对齐特性，避免更多的内存浪费</li>
 </ul>
 <p>如下：</p>
 <div class="code-wrapper"><pre><code class="hljs Objective-C">@interface Person : NSObject &#123;
