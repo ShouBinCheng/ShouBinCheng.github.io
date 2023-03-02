@@ -16,15 +16,15 @@
   <meta name="author" content="程守斌">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Objective-C 开发中被忽略的内存对齐什么结构体内存对齐结构体内存对齐是指编译器在给结构体分配内存时，为了提高内存访问效率，在结构体的成员变量之间加上一些空余的字节。这些空余的字节的大小取决于编译器的对齐方式和结构体成员变量的大小。 在默认情况下，编译器会按照结构体成员变量大小的最大值来进行对齐，即按照 8 字节对齐。因此，结构体中的 int 类型变量会被对齐到 4 字节的倍数上，doub">
+    <meta name="description" content="Objective-C 开发中被忽略的内存对齐什么是结构体内存对齐结构体内存对齐是指编译器在给结构体分配内存时，为了提高内存访问效率，在结构体的成员变量之间加上一些空余的字节。这些空余的字节的大小取决于编译器的对齐方式和结构体成员变量的大小。 在默认情况下，编译器会按照结构体成员变量大小的最大值来进行对齐，即按照 8 字节对齐。因此，结构体中的 int 类型变量会被对齐到 4 字节的倍数上，dou">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Objective-C 开发中被忽略的内存对齐">
 <meta property="og:url" content="https://icoobin.github.io/2023/03/02/ios/Objective-C-%E5%BC%80%E5%8F%91%E4%B8%AD%E8%A2%AB%E5%BF%BD%E7%95%A5%E7%9A%84%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/index.html">
 <meta property="og:site_name" content="iCoobin">
-<meta property="og:description" content="Objective-C 开发中被忽略的内存对齐什么结构体内存对齐结构体内存对齐是指编译器在给结构体分配内存时，为了提高内存访问效率，在结构体的成员变量之间加上一些空余的字节。这些空余的字节的大小取决于编译器的对齐方式和结构体成员变量的大小。 在默认情况下，编译器会按照结构体成员变量大小的最大值来进行对齐，即按照 8 字节对齐。因此，结构体中的 int 类型变量会被对齐到 4 字节的倍数上，doub">
+<meta property="og:description" content="Objective-C 开发中被忽略的内存对齐什么是结构体内存对齐结构体内存对齐是指编译器在给结构体分配内存时，为了提高内存访问效率，在结构体的成员变量之间加上一些空余的字节。这些空余的字节的大小取决于编译器的对齐方式和结构体成员变量的大小。 在默认情况下，编译器会按照结构体成员变量大小的最大值来进行对齐，即按照 8 字节对齐。因此，结构体中的 int 类型变量会被对齐到 4 字节的倍数上，dou">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-02T11:14:19.000Z">
-<meta property="article:modified_time" content="2023-03-02T11:53:26.822Z">
+<meta property="article:modified_time" content="2023-03-02T11:55:48.083Z">
 <meta property="article:author" content="程守斌">
 <meta property="article:tag" content="iOS">
 <meta property="article:tag" content="Objective-C">
@@ -313,7 +313,7 @@
             
               <div class="markdown-body">
                 
-                <h2 id="Objective-C-开发中被忽略的内存对齐"><a href="#Objective-C-开发中被忽略的内存对齐" class="headerlink" title="Objective-C 开发中被忽略的内存对齐"></a>Objective-C 开发中被忽略的内存对齐</h2><h2 id="什么结构体内存对齐"><a href="#什么结构体内存对齐" class="headerlink" title="什么结构体内存对齐"></a>什么结构体内存对齐</h2><p>结构体内存对齐是指编译器在给结构体分配内存时，为了提高内存访问效率，在结构体的成员变量之间加上一些空余的字节。这些空余的字节的大小取决于编译器的对齐方式和结构体成员变量的大小。</p>
+                <h2 id="Objective-C-开发中被忽略的内存对齐"><a href="#Objective-C-开发中被忽略的内存对齐" class="headerlink" title="Objective-C 开发中被忽略的内存对齐"></a>Objective-C 开发中被忽略的内存对齐</h2><h2 id="什么是结构体内存对齐"><a href="#什么是结构体内存对齐" class="headerlink" title="什么是结构体内存对齐"></a>什么是结构体内存对齐</h2><p>结构体内存对齐是指编译器在给结构体分配内存时，为了提高内存访问效率，在结构体的成员变量之间加上一些空余的字节。这些空余的字节的大小取决于编译器的对齐方式和结构体成员变量的大小。</p>
 <p>在默认情况下，编译器会按照结构体成员变量大小的最大值来进行对齐，即按照 8 字节对齐。因此，结构体中的 int 类型变量会被对齐到 4 字节的倍数上，double 类型变量会被对齐到 8 字节的倍数上。</p>
 <h2 id="什么情况下会导致多申请内存"><a href="#什么情况下会导致多申请内存" class="headerlink" title="什么情况下会导致多申请内存"></a>什么情况下会导致多申请内存</h2><p>短类型与长类型间隔声明会导致多申请内存，我们来看下面相同成员属性的两个不同列子</p>
 <h3 id="例子1"><a href="#例子1" class="headerlink" title="例子1"></a>例子1</h3><ul>
