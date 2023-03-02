@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Objective-C 开发中被忽略的内存对齐</title>
+    <link href="/2023/03/02/ios/Objective-C-%E5%BC%80%E5%8F%91%E4%B8%AD%E8%A2%AB%E5%BF%BD%E7%95%A5%E7%9A%84%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/"/>
+    <url>/2023/03/02/ios/Objective-C-%E5%BC%80%E5%8F%91%E4%B8%AD%E8%A2%AB%E5%BF%BD%E7%95%A5%E7%9A%84%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/</url>
+    
+    <content type="html"><![CDATA[<h2 id="Objective-C-开发中被忽略的内存对齐"><a href="#Objective-C-开发中被忽略的内存对齐" class="headerlink" title="Objective-C 开发中被忽略的内存对齐"></a>Objective-C 开发中被忽略的内存对齐</h2><h2 id="什么结构体内存对齐"><a href="#什么结构体内存对齐" class="headerlink" title="什么结构体内存对齐"></a>什么结构体内存对齐</h2><p>结构体内存对齐是指编译器在给结构体分配内存时，为了提高内存访问效率，在结构体的成员变量之间加上一些空余的字节。这些空余的字节的大小取决于编译器的对齐方式和结构体成员变量的大小。</p><p>在默认情况下，编译器会按照结构体成员变量大小的最大值来进行对齐，即按照 8 字节对齐。因此，结构体中的 int 类型变量会被对齐到 4 字节的倍数上，double 类型变量会被对齐到 8 字节的倍数上。</p><h2 id="什么情况下会导致多申请内存"><a href="#什么情况下会导致多申请内存" class="headerlink" title="什么情况下会导致多申请内存"></a>什么情况下会导致多申请内存</h2><p>短类型与长类型间隔声明会导致多申请内存，我们来看下面相同成员属性的两个不同列子</p><h3 id="例子1"><a href="#例子1" class="headerlink" title="例子1"></a>例子1</h3><ul><li>8个字节长类型 double 前面还有没对齐的4个字节的短类型（会导致4个字节空间浪费）</li></ul><div class="code-wrapper"><pre><code class="hljs objective-c">@interface Person : NSObject &#123;    @public    int _age;    double no;  /// &lt;- 长类型夹在没对齐的短类型中间    int _a;    int _b;    int _c;&#125;@end@implementation Person@endint main(int argc, const char * argv[]) &#123;    @autoreleasepool &#123;        Person *p = [[Person alloc] init];        /// 获得 obj 指针指向内存的大小        /// (__bridge const void *) (obj )        NSLog(@&quot;malloc size:%zd&quot;, malloc_size((__bridge const void *)(p)));        /// 获取 NSObject 累的实例对象的大小        NSLog(@&quot;use size:%zd&quot;, class_getInstanceSize([Person class]));    &#125;    return 0;&#125;</code></pre></div><div class="code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># 终端打印</span>malloc size:48use size:40</code></pre></div><h3 id="例子2"><a href="#例子2" class="headerlink" title="例子2"></a>例子2</h3><div class="code-wrapper"><pre><code class="hljs objective-c">@interface Person : NSObject &#123;    @public    int _age;    int _a;    double no;  /// &lt;- 长类型夹在中间，但前面内存已经对齐    int _b;    int _c;&#125;@end@implementation Person@endint main(int argc, const char * argv[]) &#123;    @autoreleasepool &#123;        Person *p = [[Person alloc] init];        /// 获得 obj 指针指向内存的大小        /// (__bridge const void *) (obj )        NSLog(@&quot;malloc size:%zd&quot;, malloc_size((__bridge const void *)(p)));        /// 获取 NSObject 累的实例对象的大小        NSLog(@&quot;use size:%zd&quot;, class_getInstanceSize([Person class]));    &#125;    return 0;&#125;</code></pre></div><div class="code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment">#终端打印</span>malloc size:32use size:32</code></pre></div><ul><li>例子1: persion 对象申请占用了48 字节的内存空间，结构体内存对齐实际使用了 40 字节。</li><li>例子2：person 对象申请占用了 32  字节的内存空间，实际使用 32 字节</li><li>上面的两个例子相同的对象属性，仅因为属性声明排序的不同，而多出浪费掉 16 字节的存储空间</li><li>可以看出系统并不会自动优化对象结构体内部属性在内存中的存储顺序，而是按代码声明的顺序存储，如果不注意内存对齐，中间就会有很多的内存空隙没有被使用到，从而导致内存浪费的情况</li></ul><h2 id="养成好开发习惯"><a href="#养成好开发习惯" class="headerlink" title="养成好开发习惯"></a>养成好开发习惯</h2><ul><li>基于对系统内存对齐的认识，我们应该养成好的开发习惯</li><li>可以吸管型的将长类型的属性声明在前面，这样就可以很好的利用好结构体内存对齐特性，避免更多的内存浪费</li></ul><p>如下：</p><div class="code-wrapper"><pre><code class="hljs Objective-C">@interface Person : NSObject &#123;    @public    double no;  /// &lt;- 长类型放前面    int _age;    int _a;    int _b;    int _c;&#125;@end@implementation Person@endint main(int argc, const char * argv[]) &#123;    @autoreleasepool &#123;        Person *p = [[Person alloc] init];        /// 获得 obj 指针指向内存的大小        /// (__bridge const void *) (obj )        NSLog(@&quot;malloc size:%zd&quot;, malloc_size((__bridge const void *)(p)));        /// 获取 NSObject 累的实例对象的大小        NSLog(@&quot;use size:%zd&quot;, class_getInstanceSize([Person class]));    &#125;    return 0;&#125;</code></pre></div><div class="code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment">#终端打印</span>malloc size:32use size:32</code></pre></div><h2 id="OC-代码转为-C-x2F-C-代码"><a href="#OC-代码转为-C-x2F-C-代码" class="headerlink" title="OC 代码转为 C&#x2F;C++ 代码"></a>OC 代码转为 C&#x2F;C++ 代码</h2><div class="code-wrapper"><pre><code class="hljs bash">clang -rewrite-objc main.m -o main.cpp</code></pre></div><p>可以看到 Person 对象的结构体如下:</p><div class="code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Person_IMPL</span> &#123;<span class="hljs-keyword">struct</span> <span class="hljs-title class_">NSObject_IMPL</span> NSObject_IVARS;<span class="hljs-type">double</span> no;<span class="hljs-type">int</span> _age;<span class="hljs-type">int</span> _a;<span class="hljs-type">int</span> _b;<span class="hljs-type">int</span> _c;&#125;;</code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>iOS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>iOS</tag>
+      
+      <tag>Objective-C</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Objective-C weak 指针源码解析</title>
     <link href="/2023/03/01/ios/Objective-C-weak-%E6%8C%87%E9%92%88%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/"/>
     <url>/2023/03/01/ios/Objective-C-weak-%E6%8C%87%E9%92%88%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</url>
