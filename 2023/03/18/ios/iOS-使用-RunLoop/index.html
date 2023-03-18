@@ -25,10 +25,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://icoobin.github.io/index_imgs/runloop.png">
 <meta property="article:published_time" content="2023-03-18T03:04:19.000Z">
-<meta property="article:modified_time" content="2023-03-18T08:11:34.459Z">
+<meta property="article:modified_time" content="2023-03-18T08:40:31.590Z">
 <meta property="article:author" content="程守斌">
 <meta property="article:tag" content="iOS">
-<meta property="article:tag" content="Objective-C">
+<meta property="article:tag" content="objc">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://icoobin.github.io/index_imgs/runloop.png">
   
@@ -323,17 +323,17 @@
 </ul>
 </li>
 </ul>
-<div class="code-wrapper"><pre><code class="hljs Objectiv-C">self.thread = [[MyThread alloc] initWithBlock:^&#123;
-	NSRunLoop *runloop = [NSRunLoop currentRunLoop];
-	// 线程保活，需要添加一个 Port 
-    [runloop addPort:[[NSPort alloc] init]
-                  forMode:NSRunLoopCommonModes];
-	// run 方法运行 runloop，并且 runloop 永远无法关闭
+<div class="code-wrapper"><pre><code class="hljs objc"><span class="hljs-keyword">self</span>.thread = [[MyThread alloc] initWithBlock:^&#123;
+	<span class="hljs-built_in">NSRunLoop</span> *runloop = [<span class="hljs-built_in">NSRunLoop</span> currentRunLoop];
+	<span class="hljs-comment">// 线程保活，需要添加一个 Port </span>
+    [runloop addPort:[[<span class="hljs-built_in">NSPort</span> alloc] init]
+                  forMode:<span class="hljs-built_in">NSRunLoopCommonModes</span>];
+	<span class="hljs-comment">// run 方法运行 runloop，并且 runloop 永远无法关闭</span>
 	[runloop run];
 &#125;];
-[self.thread start];
+[<span class="hljs-keyword">self</span>.thread start];
 
-/// 这里的 self 可自由 dealloc
+<span class="hljs-comment">/// 这里的 self 可自由 dealloc</span>
 </code></pre></div>
 
 <ul>
@@ -342,22 +342,22 @@
 </ul>
 </li>
 </ul>
-<div class="code-wrapper"><pre><code class="hljs C"><span class="hljs-type">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;
-	NSRunLoop *runloop = [NSRunLoop currentRunLoop];
+<div class="code-wrapper"><pre><code class="hljs objc"><span class="hljs-type">void</span> run(<span class="hljs-type">void</span>) &#123;
+	<span class="hljs-built_in">NSRunLoop</span> *runloop = [<span class="hljs-built_in">NSRunLoop</span> currentRunLoop];
 	<span class="hljs-comment">// 线程保活，需要添加一个 Port </span>
-	[runloop addPort:[[NSPort alloc] init]
-                  forMode:NSRunLoopCommonModes];
+	[runloop addPort:[[<span class="hljs-built_in">NSPort</span> alloc] init]
+                  forMode:<span class="hljs-built_in">NSRunLoopCommonModes</span>];
 	<span class="hljs-comment">// run 方法运行 runloop，并且 runloop 永远无法关闭</span>
 	[runloop run];
 &#125;</code></pre></div>
 
-<div class="code-wrapper"><pre><code class="hljs Objectiv-C">self.thread = [[MyThread alloc] initWithBlock:^&#123;
-	//调用 C 方法获取
+<div class="code-wrapper"><pre><code class="hljs objc"><span class="hljs-keyword">self</span>.thread = [[MyThread alloc] initWithBlock:^&#123;
+	<span class="hljs-comment">//调用 C 方法获取</span>
 	run();
 &#125;];
-[self.thread start];
+[<span class="hljs-keyword">self</span>.thread start];
 
-/// 这种方式获取，runloop 对 self 也不会产生强引用，self 可自由 dealloc
+<span class="hljs-comment">/// 这种方式获取，runloop 对 self 也不会产生强引用，self 可自由 dealloc</span>
 </code></pre></div>
 
 <ul>
@@ -367,27 +367,27 @@
 </ul>
 </li>
 </ul>
-<div class="code-wrapper"><pre><code class="hljs Objective-C">- (void)run &#123;    
-    NSRunLoop *runloop = [NSRunLoop currentRunLoop];
-    // 线程保活，需要添加一个 Port 
-    [runloop addPort:[[NSPort alloc] init]
-                  forMode:NSRunLoopCommonModes];
-	// run 方法运行 runloop，并且 runloop 永远无法关闭
+<div class="code-wrapper"><pre><code class="hljs objc">- (<span class="hljs-type">void</span>)run &#123;    
+    <span class="hljs-built_in">NSRunLoop</span> *runloop = [<span class="hljs-built_in">NSRunLoop</span> currentRunLoop];
+    <span class="hljs-comment">// 线程保活，需要添加一个 Port </span>
+    [runloop addPort:[[<span class="hljs-built_in">NSPort</span> alloc] init]
+                  forMode:<span class="hljs-built_in">NSRunLoopCommonModes</span>];
+	<span class="hljs-comment">// run 方法运行 runloop，并且 runloop 永远无法关闭</span>
     [runloop run];
 &#125;
 </code></pre></div>
 
-<div class="code-wrapper"><pre><code class="hljs Objective-C">__weak typeof(self) _weakSlef = self;
-self.thread = [[MyThread alloc] initWithBlock:^&#123;
-	//给 self 发送消息
+<div class="code-wrapper"><pre><code class="hljs objc">__<span class="hljs-keyword">weak</span> <span class="hljs-keyword">typeof</span>(<span class="hljs-keyword">self</span>) _weakSlef = <span class="hljs-keyword">self</span>;
+<span class="hljs-keyword">self</span>.thread = [[MyThread alloc] initWithBlock:^&#123;
+	<span class="hljs-comment">//给 self 发送消息</span>
 	[_weakSlef run];
 &#125;];
-[self.thread start];
+[<span class="hljs-keyword">self</span>.thread start];
 
-/// 这种方式获取，runloop 堆栈会对 self 会产生强引用
-/// self 不可自由 dealloc，只有当 runloop 销毁时，self 才能自由释放而不管 
-/// 因为 OC 的消息转发实际上会转成 C 函数的调用
-/// 第一个参数会默认传递 self 到 run 函数堆栈当中， [runloop run] 会时当前函数堆栈常驻，指导 RunLoop 销毁</code></pre></div>
+<span class="hljs-comment">/// 这种方式获取，runloop 堆栈会对 self 会产生强引用</span>
+<span class="hljs-comment">/// self 不可自由 dealloc，只有当 runloop 销毁时，self 才能自由释放而不管 </span>
+<span class="hljs-comment">/// 因为 OC 的消息转发实际上会转成 C 函数的调用</span>
+<span class="hljs-comment">/// 第一个参数会默认传递 self 到 run 函数堆栈当中， [runloop run] 会时当前函数堆栈常驻，指导 RunLoop 销毁</span></code></pre></div>
 
 <h4 id="方式2-使用-initWithTarget-selector-object-来启动线程"><a href="#方式2-使用-initWithTarget-selector-object-来启动线程" class="headerlink" title="方式2: 使用 initWithTarget:selector:object: 来启动线程"></a>方式2: 使用 initWithTarget:selector:object: 来启动线程</h4><ul>
 <li>2.1 该方式和 1.3 一样，都使用了消息发送机制<ul>
@@ -396,20 +396,20 @@ self.thread = [[MyThread alloc] initWithBlock:^&#123;
 </ul>
 </li>
 </ul>
-<div class="code-wrapper"><pre><code class="hljs Objective-C">- (void)run &#123;    
-    NSRunLoop *runloop = [NSRunLoop currentRunLoop];
-    // 线程保活，需要添加一个 Port 
-    [runloop addPort:[[NSPort alloc] init]
-                  forMode:NSRunLoopCommonModes];
-	// run 方法运行 runloop，并且 runloop 永远无法关闭
+<div class="code-wrapper"><pre><code class="hljs objc">- (<span class="hljs-type">void</span>)run &#123;    
+    <span class="hljs-built_in">NSRunLoop</span> *runloop = [<span class="hljs-built_in">NSRunLoop</span> currentRunLoop];
+    <span class="hljs-comment">// 线程保活，需要添加一个 Port </span>
+    [runloop addPort:[[<span class="hljs-built_in">NSPort</span> alloc] init]
+                  forMode:<span class="hljs-built_in">NSRunLoopCommonModes</span>];
+	<span class="hljs-comment">// run 方法运行 runloop，并且 runloop 永远无法关闭</span>
     [runloop run];
 &#125;
 </code></pre></div>
 
-<div class="code-wrapper"><pre><code class="hljs Objective-C">self.thread = [[MyThread alloc] initWithTarget:_weakSelf
-                                          selector:@selector(run)
-                                            object:nil];
-[self.thread start];
+<div class="code-wrapper"><pre><code class="hljs objc"><span class="hljs-keyword">self</span>.thread = [[MyThread alloc] initWithTarget:_weakSelf
+                                          selector:<span class="hljs-keyword">@selector</span>(run)
+                                            object:<span class="hljs-literal">nil</span>];
+[<span class="hljs-keyword">self</span>.thread start];
 &#125;];
 </code></pre></div>
 
@@ -428,126 +428,126 @@ self.thread = [[MyThread alloc] initWithBlock:^&#123;
 </ul>
 </li>
 </ul>
-<div class="code-wrapper"><pre><code class="hljs Objective-C">- (void)run &#123;    
-	NSRunLoop *runloop = [NSRunLoop currentRunLoop];
-	// 线程保活，需要添加一个 Port 
-	[runloop addPort:[[NSPort alloc] init]
-			 forMode:NSRunLoopCommonModes];
+<div class="code-wrapper"><pre><code class="hljs objc">- (<span class="hljs-type">void</span>)run &#123;    
+	<span class="hljs-built_in">NSRunLoop</span> *runloop = [<span class="hljs-built_in">NSRunLoop</span> currentRunLoop];
+	<span class="hljs-comment">// 线程保活，需要添加一个 Port </span>
+	[runloop addPort:[[<span class="hljs-built_in">NSPort</span> alloc] init]
+			 forMode:<span class="hljs-built_in">NSRunLoopCommonModes</span>];
 	
-	// 手动控制循环
-	// 这里需要注意 shouldKeepRunning 为 YES 时运行，这样 self 为 nil 时，runloop 能正确停止
-	// 如果使用 self.isStop ，则需要判断 while (self &amp;&amp; !self.isStop) 来避免 runloop 无法停止的情况
-	while (self.shouldKeepRunning) &#123;
-		[runloop runMode:NSDefaultRunLoopMode
-			  beforeDate:[NSDate distantFuture]];
+	<span class="hljs-comment">// 手动控制循环</span>
+	<span class="hljs-comment">// 这里需要注意 shouldKeepRunning 为 YES 时运行，这样 self 为 nil 时，runloop 能正确停止</span>
+	<span class="hljs-comment">// 如果使用 self.isStop ，则需要判断 while (self &amp;&amp; !self.isStop) 来避免 runloop 无法停止的情况</span>
+	<span class="hljs-keyword">while</span> (<span class="hljs-keyword">self</span>.shouldKeepRunning) &#123;
+		[runloop runMode:<span class="hljs-built_in">NSDefaultRunLoopMode</span>
+			  beforeDate:[<span class="hljs-built_in">NSDate</span> distantFuture]];
 	&#125;
-	NSLog(@&quot; ---- END -----&quot;);
+	<span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot; ---- END -----&quot;</span>);
 &#125;
 
-/// 调用该方法需要跳转的 runloop 线程才能调用
-- (void)stop &#123;
-	if (!self.thread) return;
+<span class="hljs-comment">/// 调用该方法需要跳转的 runloop 线程才能调用</span>
+- (<span class="hljs-type">void</span>)stop &#123;
+	<span class="hljs-keyword">if</span> (!<span class="hljs-keyword">self</span>.thread) <span class="hljs-keyword">return</span>;
 	
-	// 调用线程 stop
-	[self performSelector:@selector(stopThread)
- 	             onThread:self.thread
-	           withObject:nil
-	        waitUntilDone:YES];
+	<span class="hljs-comment">// 调用线程 stop</span>
+	[<span class="hljs-keyword">self</span> performSelector:<span class="hljs-keyword">@selector</span>(stopThread)
+ 	             onThread:<span class="hljs-keyword">self</span>.thread
+	           withObject:<span class="hljs-literal">nil</span>
+	        waitUntilDone:<span class="hljs-literal">YES</span>];
 &#125;
 
-- (void)stopThread &#123;
-	/// 手动控制 RunLoop 标识为 NO
-	self.shouldKeepRunning = NO;
-	/// 结束当前正在执行的 RunLoop 循环
-	NSRunLoop *runloop = [NSRunLoop currentRunLoop];
-	CFRunLoopStop([runloop getCFRunLoop]);
+- (<span class="hljs-type">void</span>)stopThread &#123;
+	<span class="hljs-comment">/// 手动控制 RunLoop 标识为 NO</span>
+	<span class="hljs-keyword">self</span>.shouldKeepRunning = <span class="hljs-literal">NO</span>;
+	<span class="hljs-comment">/// 结束当前正在执行的 RunLoop 循环</span>
+	<span class="hljs-built_in">NSRunLoop</span> *runloop = [<span class="hljs-built_in">NSRunLoop</span> currentRunLoop];
+	<span class="hljs-built_in">CFRunLoopStop</span>([runloop getCFRunLoop]);
 	
-	// 清空线程，因为 runloop 结束后，线程已经没用了。
-	self.thread = nil;
+	<span class="hljs-comment">// 清空线程，因为 runloop 结束后，线程已经没用了。</span>
+	<span class="hljs-keyword">self</span>.thread = <span class="hljs-literal">nil</span>;
 &#125;
 
-/// 手动关闭
-- (void)didClickCloseRunLoop &#123;
-	if (!self.thread) return;
-	// 转到 self.thread RunLoop 所在的线程调用 stopThread
-    [self performSelector:@selector(stopThread)
-                 onThread:self.thread
-               withObject:nil
-            waitUntilDone:NO];
+<span class="hljs-comment">/// 手动关闭</span>
+- (<span class="hljs-type">void</span>)didClickCloseRunLoop &#123;
+	<span class="hljs-keyword">if</span> (!<span class="hljs-keyword">self</span>.thread) <span class="hljs-keyword">return</span>;
+	<span class="hljs-comment">// 转到 self.thread RunLoop 所在的线程调用 stopThread</span>
+    [<span class="hljs-keyword">self</span> performSelector:<span class="hljs-keyword">@selector</span>(stopThread)
+                 onThread:<span class="hljs-keyword">self</span>.thread
+               withObject:<span class="hljs-literal">nil</span>
+            waitUntilDone:<span class="hljs-literal">NO</span>];
 &#125;
 
-/// self 释放时关闭
-/// 注意 RunLoop 对 self 的生命周期持有关系
-/// 只有 RunLoop 堆栈对 self 没有持有关系的情况下才能 dealloc 里销毁 RunLoop
-/// 否则需要先在其他地方手动先关闭 RunLoop
-- (void)dealloc &#123;
+<span class="hljs-comment">/// self 释放时关闭</span>
+<span class="hljs-comment">/// 注意 RunLoop 对 self 的生命周期持有关系</span>
+<span class="hljs-comment">/// 只有 RunLoop 堆栈对 self 没有持有关系的情况下才能 dealloc 里销毁 RunLoop</span>
+<span class="hljs-comment">/// 否则需要先在其他地方手动先关闭 RunLoop</span>
+- (<span class="hljs-type">void</span>)dealloc &#123;
 
-	// 转到 self.thread RunLoop 所在的线程调用 stopThread
-//    [self performSelector:@selector(stopThread)
-//                 onThread:self.thread
-//               withObject:nil
-//            waitUntilDone:YES];
-	//这里 waitUntilDone: 传 YES，表示等待线程执行完成，就不会有问题
-	//如果传 NO 则表示不等线程执行完成，在这里可能会导致 RunLoop 坏内存访问崩溃，因为 runloop 要用 self 发送 stop 消息，这里的 self 早以释放了
-	//最好将这句调用抽到一个单独的方法里，防止其他地方随意调用 stop。
-	[self stop];
+	<span class="hljs-comment">// 转到 self.thread RunLoop 所在的线程调用 stopThread</span>
+<span class="hljs-comment">//    [self performSelector:@selector(stopThread)</span>
+<span class="hljs-comment">//                 onThread:self.thread</span>
+<span class="hljs-comment">//               withObject:nil</span>
+<span class="hljs-comment">//            waitUntilDone:YES];</span>
+	<span class="hljs-comment">//这里 waitUntilDone: 传 YES，表示等待线程执行完成，就不会有问题</span>
+	<span class="hljs-comment">//如果传 NO 则表示不等线程执行完成，在这里可能会导致 RunLoop 坏内存访问崩溃，因为 runloop 要用 self 发送 stop 消息，这里的 self 早以释放了</span>
+	<span class="hljs-comment">//最好将这句调用抽到一个单独的方法里，防止其他地方随意调用 stop。</span>
+	[<span class="hljs-keyword">self</span> stop];
 
 &#125;
 </code></pre></div>
 
-<h3 id="添加-Port-到-Source1"><a href="#添加-Port-到-Source1" class="headerlink" title="添加 Port 到 Source1"></a>添加 Port 到 Source1</h3><div class="code-wrapper"><pre><code class="hljs Objective-C">NSRunLoop *runloop = [NSRunLoop currentRunLoop];
-/// runloop 没启动前需要添加一个 Port ，让 RunLoop 保活
-[runloop addPort:[[NSPort alloc] init]
-         forMode:NSRunLoopCommonModes];</code></pre></div>
+<h3 id="添加-Port-到-Source1"><a href="#添加-Port-到-Source1" class="headerlink" title="添加 Port 到 Source1"></a>添加 Port 到 Source1</h3><div class="code-wrapper"><pre><code class="hljs objc"><span class="hljs-built_in">NSRunLoop</span> *runloop = [<span class="hljs-built_in">NSRunLoop</span> currentRunLoop];
+<span class="hljs-comment">/// runloop 没启动前需要添加一个 Port ，让 RunLoop 保活</span>
+[runloop addPort:[[<span class="hljs-built_in">NSPort</span> alloc] init]
+         forMode:<span class="hljs-built_in">NSRunLoopCommonModes</span>];</code></pre></div>
 
-<h3 id="添加-Observer-到-RunLoop"><a href="#添加-Observer-到-RunLoop" class="headerlink" title="添加 Observer 到 RunLoop"></a>添加 Observer 到 RunLoop</h3><div class="code-wrapper"><pre><code class="hljs Objective-C">/// 监听 RunLoop
-CFRunLoopObserverRef observer = CFRunLoopObserverCreateWithHandler(kCFAllocatorDefault,
+<h3 id="添加-Observer-到-RunLoop"><a href="#添加-Observer-到-RunLoop" class="headerlink" title="添加 Observer 到 RunLoop"></a>添加 Observer 到 RunLoop</h3><div class="code-wrapper"><pre><code class="hljs objc"><span class="hljs-comment">/// 监听 RunLoop</span>
+<span class="hljs-built_in">CFRunLoopObserverRef</span> observer = <span class="hljs-built_in">CFRunLoopObserverCreateWithHandler</span>(kCFAllocatorDefault,
                                                                    kCFRunLoopAllActivities,
-                                                                   YES,
-                                                                   0,
-                                                                   ^(CFRunLoopObserverRef observer,
-                                                                     CFRunLoopActivity activity) &#123;
-    // 处理 RunLoop 事件
-    switch (activity) &#123;
-        case kCFRunLoopEntry:
-            NSLog(@&quot;kCFRunLoopEntry&quot;);
-            break;
-        case kCFRunLoopBeforeTimers:
-            NSLog(@&quot;kCFRunLoopBeforeTimers&quot;);
-            break;
-        case kCFRunLoopBeforeSources:
-            NSLog(@&quot;kCFRunLoopBeforeSources&quot;);
-            break;
-        case kCFRunLoopBeforeWaiting:
-            NSLog(@&quot;kCFRunLoopBeforeWaiting&quot;);
-            break;
-        case kCFRunLoopAfterWaiting:
-            NSLog(@&quot;kCFRunLoopAfterWaiting&quot;);
-            break;
-        case kCFRunLoopExit:
-            NSLog(@&quot;kCFRunLoopEntry&quot;);
-            break;
-        default:
-            break;
+                                                                   <span class="hljs-literal">YES</span>,
+                                                                   <span class="hljs-number">0</span>,
+                                                                   ^(<span class="hljs-built_in">CFRunLoopObserverRef</span> observer,
+                                                                     <span class="hljs-built_in">CFRunLoopActivity</span> activity) &#123;
+    <span class="hljs-comment">// 处理 RunLoop 事件</span>
+    <span class="hljs-keyword">switch</span> (activity) &#123;
+        <span class="hljs-keyword">case</span> kCFRunLoopEntry:
+            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;kCFRunLoopEntry&quot;</span>);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> kCFRunLoopBeforeTimers:
+            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;kCFRunLoopBeforeTimers&quot;</span>);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> kCFRunLoopBeforeSources:
+            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;kCFRunLoopBeforeSources&quot;</span>);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> kCFRunLoopBeforeWaiting:
+            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;kCFRunLoopBeforeWaiting&quot;</span>);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> kCFRunLoopAfterWaiting:
+            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;kCFRunLoopAfterWaiting&quot;</span>);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> kCFRunLoopExit:
+            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;kCFRunLoopEntry&quot;</span>);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">default</span>:
+            <span class="hljs-keyword">break</span>;
     &#125;
 &#125;);
 
-CFRunLoopAddObserver(CFRunLoopGetCurrent(), observer, kCFRunLoopDefaultMode);
-CFRelease(observer);</code></pre></div>
+<span class="hljs-built_in">CFRunLoopAddObserver</span>(<span class="hljs-built_in">CFRunLoopGetCurrent</span>(), observer, kCFRunLoopDefaultMode);
+<span class="hljs-built_in">CFRelease</span>(observer);</code></pre></div>
 
-<h3 id="添加-NSTimer-定时器"><a href="#添加-NSTimer-定时器" class="headerlink" title="添加 NSTimer 定时器"></a>添加 NSTimer 定时器</h3><div class="code-wrapper"><pre><code class="hljs Objective-C">/// 创建 Timer，并自动添加到当前 RunLoop 的 default mode 下
-[NSTimer scheduledTimerWithTimeInterval:1.0 repeats:YES block:^(NSTimer * _Nonnull timer) &#123;
-    NSLog(@&quot; timer ！！！&quot;);
+<h3 id="添加-NSTimer-定时器"><a href="#添加-NSTimer-定时器" class="headerlink" title="添加 NSTimer 定时器"></a>添加 NSTimer 定时器</h3><div class="code-wrapper"><pre><code class="hljs objc"><span class="hljs-comment">/// 创建 Timer，并自动添加到当前 RunLoop 的 default mode 下</span>
+[<span class="hljs-built_in">NSTimer</span> scheduledTimerWithTimeInterval:<span class="hljs-number">1.0</span> repeats:<span class="hljs-literal">YES</span> block:^(<span class="hljs-built_in">NSTimer</span> * _Nonnull timer) &#123;
+    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot; timer ！！！&quot;</span>);
 &#125;];</code></pre></div>
 
-<div class="code-wrapper"><pre><code class="hljs Objective-C">/// 创建 timer，还没有加入到 runloop
-NSTimer *timer = [NSTimer timerWithTimeInterval:3
-                                        repeats:YES
-                                          block:^(NSTimer * _Nonnull timer) &#123;
-    NSLog(@&quot; timer ！！！&quot;);
+<div class="code-wrapper"><pre><code class="hljs objc"><span class="hljs-comment">/// 创建 timer，还没有加入到 runloop</span>
+<span class="hljs-built_in">NSTimer</span> *timer = [<span class="hljs-built_in">NSTimer</span> timerWithTimeInterval:<span class="hljs-number">3</span>
+                                        repeats:<span class="hljs-literal">YES</span>
+                                          block:^(<span class="hljs-built_in">NSTimer</span> * _Nonnull timer) &#123;
+    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot; timer ！！！&quot;</span>);
 &#125;];
-/// 把 timer 加入到 runloop default mode 下
-[runloop addTimer:timer forMode:NSDefaultRunLoopMode];</code></pre></div>
+<span class="hljs-comment">/// 把 timer 加入到 runloop default mode 下</span>
+[runloop addTimer:timer forMode:<span class="hljs-built_in">NSDefaultRunLoopMode</span>];</code></pre></div>
 
 <h3 id="添加-Block-任务到-RunLoop"><a href="#添加-Block-任务到-RunLoop" class="headerlink" title="添加 Block 任务到 RunLoop"></a>添加 Block 任务到 RunLoop</h3><ul>
 <li>CFRunLoopPerformBlock<ul>
@@ -555,11 +555,11 @@ NSTimer *timer = [NSTimer timerWithTimeInterval:3
 </ul>
 </li>
 </ul>
-<div class="code-wrapper"><pre><code class="hljs Objective-C">CFRunLoopRef runLoop = CFRunLoopGetCurrent();
-/// 往 RunLoop 中添加 Block，但不会立即执行
-/// 也不会触发 RunLoop 唤醒，会在 RunLoop 运行时执行。
-CFRunLoopPerformBlock(runLoop, kCFRunLoopDefaultMode, ^&#123;
-    /// Block 执行代码
+<div class="code-wrapper"><pre><code class="hljs objc"><span class="hljs-built_in">CFRunLoopRef</span> runLoop = <span class="hljs-built_in">CFRunLoopGetCurrent</span>();
+<span class="hljs-comment">/// 往 RunLoop 中添加 Block，但不会立即执行</span>
+<span class="hljs-comment">/// 也不会触发 RunLoop 唤醒，会在 RunLoop 运行时执行。</span>
+<span class="hljs-built_in">CFRunLoopPerformBlock</span>(runLoop, kCFRunLoopDefaultMode, ^&#123;
+    <span class="hljs-comment">/// Block 执行代码</span>
 &#125;);</code></pre></div>
 
 <ul>
@@ -570,13 +570,13 @@ CFRunLoopPerformBlock(runLoop, kCFRunLoopDefaultMode, ^&#123;
 </ul>
 </li>
 </ul>
-<div class="code-wrapper"><pre><code class="hljs Objetive-C">/// 给 RunLoop 一个 Block 执行
-[self.runloop performBlock:^&#123;
+<div class="code-wrapper"><pre><code class="hljs objc"><span class="hljs-comment">/// 给 RunLoop 一个 Block 执行</span>
+[<span class="hljs-keyword">self</span>.runloop performBlock:^&#123;
     
 &#125;];
 
-/// 给 RunLoop default mode 下一个 Block 执行
-[self.runloop performInModes:@[NSDefaultRunLoopMode] block:^&#123;
+<span class="hljs-comment">/// 给 RunLoop default mode 下一个 Block 执行</span>
+[<span class="hljs-keyword">self</span>.runloop performInModes:@[<span class="hljs-built_in">NSDefaultRunLoopMode</span>] block:^&#123;
         
 &#125;];
 </code></pre></div>
@@ -617,7 +617,7 @@ CFRunLoopPerformBlock(runLoop, kCFRunLoopDefaultMode, ^&#123;
       
         <a href="/tags/iOS/">#iOS</a>
       
-        <a href="/tags/Objective-C/">#Objective-C</a>
+        <a href="/tags/objc/">#objc</a>
       
     </div>
   
