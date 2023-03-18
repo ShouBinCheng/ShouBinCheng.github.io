@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://icoobin.github.io/index_imgs/runloop.png">
 <meta property="article:published_time" content="2023-03-18T03:04:19.000Z">
-<meta property="article:modified_time" content="2023-03-18T05:18:09.557Z">
+<meta property="article:modified_time" content="2023-03-18T08:00:21.828Z">
 <meta property="article:author" content="程守斌">
 <meta property="article:tag" content="iOS">
 <meta property="article:tag" content="Objective-C">
@@ -253,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5k 字
+          5.3k 字
         
       </span>
     
@@ -264,7 +264,7 @@
         
         
         
-          42 分钟
+          45 分钟
         
       </span>
     
@@ -433,7 +433,10 @@ self.thread = [[MyThread alloc] initWithBlock:^&#123;
 	// 线程保活，需要添加一个 Port 
 	[runloop addPort:[[NSPort alloc] init]
 			 forMode:NSRunLoopCommonModes];
+	
 	// 手动控制循环
+	// 这里需要注意 shouldKeepRunning 为 YES 时运行，这样 self 为 nil 时，runloop 能正确停止
+	// 如果使用 self.isStop ，则需要判断 while (self &amp;&amp; !self.isStop) 来避免 runloop 无法停止的情况
 	while (self.shouldKeepRunning) &#123;
 		[runloop runMode:NSDefaultRunLoopMode
 			  beforeDate:[NSDate distantFuture]];
@@ -470,6 +473,10 @@ self.thread = [[MyThread alloc] initWithBlock:^&#123;
                  onThread:self.thread
                withObject:nil
             waitUntilDone:YES];
+	//这里 waitUntilDone: 传 YES，表示等待线程执行完成，就不会有问题
+	//如果传 NO 则表示不等线程执行完成，在这里可能会导致 RunLoop 坏内存访问崩溃，因为 runloop 要用 self 发送 stop 消息，这里的 self 早以释放了
+	//最好将这句调用抽到一个单独的方法里，防止其他地方随意调用 stop。
+
 &#125;
 </code></pre></div>
 
