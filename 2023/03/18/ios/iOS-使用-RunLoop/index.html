@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://icoobin.github.io/index_imgs/runloop.png">
 <meta property="article:published_time" content="2023-03-18T03:04:19.000Z">
-<meta property="article:modified_time" content="2023-03-18T08:00:21.828Z">
+<meta property="article:modified_time" content="2023-03-18T08:11:34.459Z">
 <meta property="article:author" content="程守斌">
 <meta property="article:tag" content="iOS">
 <meta property="article:tag" content="Objective-C">
@@ -253,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.3k 字
+          5.6k 字
         
       </span>
     
@@ -264,7 +264,7 @@
         
         
         
-          45 分钟
+          47 分钟
         
       </span>
     
@@ -446,20 +446,34 @@ self.thread = [[MyThread alloc] initWithBlock:^&#123;
 
 /// 调用该方法需要跳转的 runloop 线程才能调用
 - (void)stop &#123;
+	if (!self.thread) return;
+	
+	// 调用线程 stop
+	[self performSelector:@selector(stopThread)
+ 	             onThread:self.thread
+	           withObject:nil
+	        waitUntilDone:YES];
+&#125;
+
+- (void)stopThread &#123;
 	/// 手动控制 RunLoop 标识为 NO
 	self.shouldKeepRunning = NO;
 	/// 结束当前正在执行的 RunLoop 循环
 	NSRunLoop *runloop = [NSRunLoop currentRunLoop];
 	CFRunLoopStop([runloop getCFRunLoop]);
+	
+	// 清空线程，因为 runloop 结束后，线程已经没用了。
+	self.thread = nil;
 &#125;
 
 /// 手动关闭
 - (void)didClickCloseRunLoop &#123;
-	// 转到 self.thread RunLoop 所在的线程调用 stop
-    [self performSelector:@selector(stop)
+	if (!self.thread) return;
+	// 转到 self.thread RunLoop 所在的线程调用 stopThread
+    [self performSelector:@selector(stopThread)
                  onThread:self.thread
                withObject:nil
-            waitUntilDone:YES];
+            waitUntilDone:NO];
 &#125;
 
 /// self 释放时关闭
@@ -468,14 +482,15 @@ self.thread = [[MyThread alloc] initWithBlock:^&#123;
 /// 否则需要先在其他地方手动先关闭 RunLoop
 - (void)dealloc &#123;
 
-	// 转到 self.thread RunLoop 所在的线程调用 stop
-    [self performSelector:@selector(stop)
-                 onThread:self.thread
-               withObject:nil
-            waitUntilDone:YES];
+	// 转到 self.thread RunLoop 所在的线程调用 stopThread
+//    [self performSelector:@selector(stopThread)
+//                 onThread:self.thread
+//               withObject:nil
+//            waitUntilDone:YES];
 	//这里 waitUntilDone: 传 YES，表示等待线程执行完成，就不会有问题
 	//如果传 NO 则表示不等线程执行完成，在这里可能会导致 RunLoop 坏内存访问崩溃，因为 runloop 要用 self 发送 stop 消息，这里的 self 早以释放了
 	//最好将这句调用抽到一个单独的方法里，防止其他地方随意调用 stop。
+	[self stop];
 
 &#125;
 </code></pre></div>
