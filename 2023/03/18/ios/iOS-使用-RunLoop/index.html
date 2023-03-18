@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://icoobin.github.io/index_imgs/runloop.png">
 <meta property="article:published_time" content="2023-03-18T03:04:19.000Z">
-<meta property="article:modified_time" content="2023-03-18T10:09:47.367Z">
+<meta property="article:modified_time" content="2023-03-18T15:41:57.180Z">
 <meta property="article:author" content="程守斌">
 <meta property="article:tag" content="iOS">
 <meta property="article:tag" content="Objective-C">
@@ -253,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.6k 字
+          6.1k 字
         
       </span>
     
@@ -264,7 +264,7 @@
         
         
         
-          47 分钟
+          51 分钟
         
       </span>
     
@@ -412,6 +412,29 @@
 [<span class="hljs-keyword">self</span>.thread start];
 &#125;];
 </code></pre></div>
+
+<h4 id="方式3：使用-C-语法方式启动"><a href="#方式3：使用-C-语法方式启动" class="headerlink" title="方式3：使用 C 语法方式启动"></a>方式3：使用 C 语法方式启动</h4><div class="code-wrapper"><pre><code class="hljs objc">
+<span class="hljs-comment">// 创建上下文（要初始化一下结构体）</span>
+<span class="hljs-built_in">CFRunLoopSourceContext</span> context = &#123;<span class="hljs-number">0</span>&#125;;
+
+<span class="hljs-comment">// 创建source</span>
+<span class="hljs-built_in">CFRunLoopSourceRef</span> source = <span class="hljs-built_in">CFRunLoopSourceCreate</span>(kCFAllocatorDefault, <span class="hljs-number">0</span>, &amp;context);
+
+<span class="hljs-comment">// 往Runloop中添加source</span>
+<span class="hljs-built_in">CFRunLoopAddSource</span>(<span class="hljs-built_in">CFRunLoopGetCurrent</span>(), source, kCFRunLoopDefaultMode);
+
+<span class="hljs-comment">// 销毁source</span>
+<span class="hljs-built_in">CFRelease</span>(source);
+
+<span class="hljs-comment">// 启动</span>
+<span class="hljs-comment">//CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0e10, false);</span>
+
+<span class="hljs-keyword">while</span> (weakSelf &amp;&amp; !weakSelf.isStopped) &#123;
+    <span class="hljs-comment">// 第3个参数：returnAfterSourceHandled，设置为true，代表执行完source后就会退出当前loop</span>
+    <span class="hljs-built_in">CFRunLoopRunInMode</span>(kCFRunLoopDefaultMode, <span class="hljs-number">1.0e10</span>, <span class="hljs-literal">true</span>);
+&#125;
+</code></pre></div>
+
 
 <h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul>
 <li>创建并启动 RunLoop 需要考虑实际的使用场景</li>
